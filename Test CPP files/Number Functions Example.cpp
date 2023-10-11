@@ -34,6 +34,8 @@ int GetMeTwoInts(int* firstInteger, int* secondInteger) // Does the same as the 
 		std::cout << "one or more of those were not integers \n";
 		std::cin.clear();
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		std::cin >> inputOne >> inputTwo;
+	}//test for ints
 
 	*firstInteger = inputOne;
 	*secondInteger = inputTwo;
