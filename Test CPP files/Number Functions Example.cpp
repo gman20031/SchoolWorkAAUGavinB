@@ -3,8 +3,17 @@
 #include <cstdlib>
 #include <limits>
 
-float GetMeTwoFloats(float* firstNumber, float* secondNumber) // grabs two floats from user input, checks if float, then sets the firstNumber and secondNumber variables in main to the input variables. 
-{																// this isnt exactly neccary so I dont think the extra variables used here or at the end count towards my 5 variable limit.
+float GetMeTwoFloats(float* pfirstNumber, float* psecondNumber) // grabs two floats from user input, checks if float, then sets the firstNumber and secondNumber variables in main to the input variables. 
+{												
+							/*
+								The float* pfirstNumber is saying that first variabe recieved is a floating point number pointer. the * means pointer, and the p prefix also is a reminder
+								The pointer means that if this is called, it is pointing at the recieved adress in memory.
+								If I just send a variable like normal, say int first number, and recieved an int, I would create a whole new slot in memory and copy the int i recieved
+								This way, I revieve the exact location in memory that the float in the main function is located.
+								Then when later I change *pfirstNumber to something, it literally goes to the place pointed to, and changes that adress of memory to what I tell it to.
+					
+							*/
+
 	float inputOne, inputTwo = 0.0f; //creates two temp variables to grab the inputs
 
 	std::cin >> inputOne >> inputTwo;
@@ -17,37 +26,20 @@ float GetMeTwoFloats(float* firstNumber, float* secondNumber) // grabs two float
 		std::cin >> inputOne >> inputTwo;
 	}//test for floats
 
-	*firstNumber = inputOne;	//changes firstNumber variable in main
-	*secondNumber = inputTwo;	//changes secondNumber variable in main
+	*pfirstNumber = inputOne;	//changes firstNumber variable in main
+	*psecondNumber = inputTwo;	//changes secondNumber variable in main
+		//because of the *, It means I am telling the computer the exact adress to change. 
+		//It's exactly the same as a normal variable = variable, except I just want to keep the same location in memory from main
 
 	return 0.0f;
 }// get two floats func
 
-int GetMeTwoInts(int* firstInteger, int* secondInteger) // Does the same as the float function but grabs integers for the modulo stuff specifically.
-{
-	int inputOne, inputTwo = 0; // this is all the same as above
-
-	std::cin >> inputOne >> inputTwo;
-
-	while (!std::cin.good())
-	{
-		std::cout << "one or more of those were not integers \n";
-		std::cin.clear();
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		std::cin >> inputOne >> inputTwo;
-	}//test for ints
-
-	*firstInteger = inputOne;
-	*secondInteger = inputTwo;
-
-	return 0;
-}//GetMeTwoInts func
 
 int main()
 {
 	float numberOne, numberTwo = 10;
 
-	GetMeTwoFloats(&numberOne, &numberTwo);
+	GetMeTwoFloats(&numberOne, &numberTwo); // Sends the ADRESS of both numberOne and numberTwo to the function of GetMeTwoFloats();
 
 	return 0
 }
