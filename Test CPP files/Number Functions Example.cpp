@@ -34,6 +34,21 @@ float GetMeTwoFloats(float* pfirstNumber, float* psecondNumber) // grabs two flo
 	return 0.0f;
 }// get two floats func
 
+int GetMeInteger()
+{
+	int userIntInput;
+
+	std::cin >> userIntInput;
+
+	while (!std::cin.good()) // if input is not good for any reason loop
+	{
+		std::cout << "Please enter an integer only \n";
+		std::cin.clear();													// Resets all error flags from cin
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // effectivelly clears the cin stream buffer
+		std::cin >> userIntInput;
+	}//test for floats
+
+}
 
 int main()
 {

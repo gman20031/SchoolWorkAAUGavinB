@@ -1,23 +1,33 @@
 #include <iostream>
 #include <string>
+#include <iomanip> 
+//using namespace std;
+
 
 
 int main()
 {
-	int basesTotal, basesOwned;
+	int playerCount;
+	int* playerScores;
 
+	std::cin >> playerCount;
+	playerScores = (int*)calloc(playerCount + 1, sizeof(int));
 
-	std::cout << "How many total bases\n";
-	std::cin >> basesTotal;
+	for (int i = 0; i < playerCount; ++i)
+	{
+		playerScores[i] = 0;
+	}
 
-	std::cout << "how many bases are owned\n";
-	std::cin >> basesOwned;
+	for (int i = 0; i < playerCount; ++i)
+	{
+		std::cout << playerScores[i];
+	}
 
+	for (int i = 0; i < playerCount; ++i)
+	{
+		std::cout << playerScores[i];
+	}
 
-	if (basesTotal == basesOwned) std::cout << "All your base are belong to us.\n";
-	else if (basesOwned > 1) std::cout << "Some your base are belong to us.\n";
-	else if (basesOwned == 1) std::cout << "One your base are belong to us.\n";
-	else std::cout << "None your base are belong to us.";
-
+	free(playerScores);
 	return 0;
 }//main
