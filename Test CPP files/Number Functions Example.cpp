@@ -56,5 +56,5 @@ int main()
 
 	GetMeTwoFloats(&numberOne, &numberTwo); // Sends the ADRESS of both numberOne and numberTwo to the function of GetMeTwoFloats();
 
-	return 0
+	return 0;
 }
