@@ -1,0 +1,243 @@
+1.
+#include <iostream> //includes the library that gives us the ability to do things like cout and cin. In/out stuff
+using namespace std; // allows us to not need to write std:: everytime we use the standard library
+
+int main() // start of the main function, where the program will start, and says it should return an int
+{//start of main codeblock
+	cout << "enter any integer: "; // prints “enter any integer:"
+	cout << endl;	// adds a linebreak
+	int answer; // initalized and int variable named answer
+	cin >> answer; // sets answer equal to the next thing in the cin buffer, and waits for an input from user if nothings there.
+	cout << "You entered " << answer; // Prints "You entered 'the number they entered' " and does not end the line
+	return 0; // returns 0 in main to end the program basically
+}//end of main codeblock
+
+2.
+    // Full descriptive name; data type identifier c++ ; description ; example of literal
+
+    String ; std::string ; A word, phrase, sentence, paragraph, or other body of text. ; “dum”
+
+    Double-precision floating point number ; double ; a more precise version of a floating point number used to hold decimal point numbers; 1.5;
+
+    A boolean ; bool ; A variable that can be set to true(1) or false(0); true;
+
+    Integer; int ; a number with no digits to the right of the decimal point.; 1;
+
+    Character; char; a single ascii character; ‘c’
+
+    Floating point number; float; a less precise variable to hold decimal point numbers; 1.5f
+
+3.
+    int a = 2;
+    int b = 3;
+    int c = 4;
+    bool d = true;
+    bool e = false;
+
+3a %    // a _ b = 2; 4 _ 4 = 0 ??
+3b +    // 2 + 3 = 5; 4 + 4 = 8
+3c /    // 2 / 3 = 0; 4 / 4 = 0
+3d *    // 2 * 3 = 6; 4 * 4 = 16
+3e --A  // --2 = 1 ; --3 = 2 ?? I dont know of any prefix that will leave the number unchanged
+3f a++  // 2++ = 2 ; 3++ = 3 ?? and I dont know of any postfix that will change the number before assignment
+3g !d   // cant be ! since ! d is false, and ! e is true. but I dont know of another prefix for booleans
+3h ^    // true ^ true = false ; true ^ false = true
+3i ||   // true >= true = false ; true >= false = true
+3j ==   // 2==3 = false ; 4==4 = true;
+3k <    // 2 < 3 true 4 < 4 false  
+3L <=   // 2 <= 3 true 4 <= 4 true
+3m >    // 2 > 3 = false; 4 > 4 = false
+3n !=   // 2 != 3 = true; 4 != 4 = false
+3o >=   // 2 _ 3 = false; 4_4 = true
+
+4.
+    1. ((1+2)*3)
+    2. (1+2)
+    3. 1
+    4. 2
+    5. 3
+
+5.
+    // To seed RNG is to give the number generator a number to basically start with. Since number generator are basically complicated math equations
+    // they need a number to start off their calculations with. And the seed number is effectivelyl that number, if not literally the starting number.
+    // Then we dont reseed the RNG because that woulde effectivelly reset all the work the generator has done so far. SO if you seed a number geneartor with a 4
+    // it might output a number like 305, and then 307 then 290 say. and will keep giving puedo random numbers from there, but reseeding the generator at 4 will 
+    // always ouput those same numbers, thus removing the actualy randomness you get from rng.
+
+6.
+#include <iostream>
+#include <string>
+using namespace std;
+int main()
+{
+    cout << "Please enter a number."; // will first thing, print out the text, please enter a number
+
+    int number; // then after that initialize the number int and wait for the user to input it. the user will be inputing the number on the same line as the initial text with no space
+    cin >> number; // and assign the input directly to the number variable
+
+    //THERE WILL BE NO LINE BREAK between the "please enter a number" the number the user entered, and the next stuff
+
+    cout << number << " is "; // print out the text 'the inputed number' " is " 
+    
+    if ((number % 4) == 0) // then after that text, checks if the number is divisible by 4 and prints out "divisible by four" if it is
+    {
+        cout << "divisible by four";
+    }
+    else
+    {
+        cout << "not divisible by four"; // and "not divisible by four" if it is not
+    }
+    return 0;
+
+    // without linebreaks the output and final program will look squished.
+
+}                   //THE final ouptut of this program, if I input 4 will be
+                        // "Please enter a number.4
+                        // 4 is divisible by 4"
+
+7.
+    #include <iostream>
+    #include <string>
+    using namespace std;
+    int main()
+    {
+        int number;
+
+        cout << "Please enter a number.";
+        cin >> number;
+        //cout << '\n';
+
+        while((number % 4) == 0)
+        {
+            cout << number << " is divisible by 4\n";
+            return 0;
+        }
+        cout << number << " is not divisible by 4\n";
+        return 0;
+    }
+8.
+#include <iostream>
+#include <random>
+using namespace std;
+int main()
+{
+    constexpr int kLoopCount = 4; // the number of times to loop is equal to 4
+    int i = 0; = // i is 0
+
+    while(i < kLoopCount) // since kloop = 4 and i = 0. will loop 4 times
+    {
+        int cube = i * i * i;   //cubes i each loop, which starting from 0 would be 0
+        cout << square << endl; // prints out the cubed number and ends the line
+        ++i;    // increases i by 1
+    }//ending of the loop
+    return 0;//ends progra
+}// end of main
+        
+        /*
+            Will start with outputing 0^3 which is 0    i = 0
+            will then output 1^3 which is 1     i = 1
+            then 2^3 which is 8     i = 2
+            and 3^3 which is 27     i =3
+            i = 4, not less than 4, will quit loop and then program.
+        */
+    
+9.
+//start
+#include <iostream>
+using namespace std;
+int main()
+{
+    cout << "C";
+    cout << "++ is co";
+    cout << "ol";
+    return 0;
+}
+
+10.
+
+//start
+#include <iostream>
+#include <string>
+using namespace std;
+int main()
+{
+    int yearBorn, age;
+    cout << "what year were you born (just an int please)"
+    cin >> yearBorn;
+    age = 2023 - yearBorn;
+    cout << "So, you’re " << age << " years old, huh?";
+    //not needed?
+    return 0;
+}
+
+11.
+
+#include <iostream>
+#include <string>
+#include <time.h>
+using namespace std;
+int main()
+{
+    srand((unsigned)time(0));
+    int i = 0;
+    do {
+
+        i = 3 + rand() % ((8 - 3) + 1);
+        cout << i << endl;
+        i = 3 + rand() % ((8 - 3) + 1);
+        cout << i << endl;
+        i = 3 + rand() % ((8 - 3) + 1);
+        cout << i << endl;
+        i = 3 + rand() % ((8 - 3) + 1);
+        cout << i << endl;
+        i = 3 + rand() % ((8 - 3) + 1);
+        cout << i << endl;
+        
+        break;
+    } while (true);
+    system("pause");
+    return 0;
+}
+
+12.
+
+bool IsEven(int givenInteger)
+{
+    if ((givenInteger % 2) == 0)
+        return true;
+    else
+        return false;
+}//IsEven done
+
+13.
+#include <iostream>
+#include <string>
+
+bool IsEven(int givenInteger)
+{
+    if ((givenInteger % 2) == 0)
+        return true;
+    else
+        return false;
+}//IsEven done
+
+int main()
+{
+    const int kfirstInput = 2, ksecondInput = 3;
+    bool isEven;
+
+    //I am unsure if you wanted the straight output of the function or the boolean output, so I put both.
+    isEven = IsEven(kfirstInput);
+    if(isEven)
+        std::cout << isEven << " true\n";
+    else
+        std::cout << isEven << " false\n";
+
+    isEven = IsEven(ksecondInput);
+    if (isEven)
+        std::cout << isEven << " true\n";
+    else
+        std::cout << isEven << " false\n";
+
+    return 0;
+}
