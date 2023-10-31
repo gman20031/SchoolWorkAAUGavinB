@@ -1,0 +1,3 @@
+﻿  main.cpp
+D:\Users\GBRANDEN2\School Work\GitHub Clones\SchoolWorkAAUGavinB-main-10-16-2023\Project 8.2 Math Game\main.cpp(97,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Project 8.2 Math Game.vcxproj -> D:\Users\GBRANDEN2\School Work\GitHub Clones\SchoolWorkAAUGavinB-main-10-16-2023\Project 8.2 Math Game\x64\Debug\Project 8.2 Math Game.exe
