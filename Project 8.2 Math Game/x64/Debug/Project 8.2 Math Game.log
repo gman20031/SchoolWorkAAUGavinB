@@ -1,4 +1,0 @@
-﻿  main.cpp
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 8.2 Math Game\main.cpp(491,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  LINK : C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 8.2 Math Game\x64\Debug\Project 8.2 Math Game.exe not found or not built by the last incremental link; performing full link
-  Project 8.2 Math Game.vcxproj -> C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 8.2 Math Game\x64\Debug\Project 8.2 Math Game.exe

@@ -1,0 +1,5 @@
+﻿  main.cpp
+C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 8 Math Game\Brandenburger_MathGame\main.cpp(512,6): warning C4551: function call missing argument list
+C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 8 Math Game\Brandenburger_MathGame\main.cpp(543,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 8 Math Game\Brandenburger_MathGame\main.cpp(354): warning C4715: 'CheckAnswer': not all control paths return a value
+  Project 8.2 Math Game.vcxproj -> C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 8 Math Game\Brandenburger_MathGame\x64\Debug\Project 8.2 Math Game.exe
