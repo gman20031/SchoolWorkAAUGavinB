@@ -351,6 +351,8 @@ bool CheckAnswer(int answer, int multiplesTotal, IntAndBool* answerKey)
 			return true;
 		}
 	}
+	toConsole("error");
+	return false;
 }//CheckAnswer
 
 int MainGameLoop(GameParameter parameters) // the main game loop.
