@@ -1,28 +1,12 @@
 #include <iostream>
-#include <vector>
-#include <limits>
-#include <stdexcept>      // For std::out_of_range
-using namespace std;
+
+#define print(str) std::cout << str << std::endl
 
 int main() {
-	vector<string> names = { "Ryley", "Edan", "Reagan", "Henry", "Caius", "Jane", "Guto", "Sonya", "Tyrese", "Johnny" };
-	int index;
-	string output;
+	int variable = 25;
+	int foo;
+	foo = &variable;
 
-	cin >> index;
-
-	try
-	{
-		cout << names.at(index) << endl;
-	}
-	catch (out_of_range& error)
-	{
-		cout << "Exception! " << error.what() << endl;
-		if (index < 0)
-			cout << "The closest name is: " << names.at(0) << endl;
-		if (index > 9)
-			cout << "The closest name is: " << names.at(9) << endl;
-	}
 
 	return 0;
 }
