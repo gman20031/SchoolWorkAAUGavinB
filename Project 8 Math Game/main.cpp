@@ -307,6 +307,8 @@ bool CheckAnswer(int answer, int multiplesTotal, IntAndBool* answerKey)
 			//Also keeps track of number of captial letters recieved for future use
 			std::getline(std::cin, input);
 			tokenizedInput = TokenizeString(input, &tokenCount); 
+			if (tokenizedInput == NULL)
+				toConsole("Error : please input answer in format A,B,C no spaces");
 		} while (tokenizedInput == NULL);
 
 		//for (int i = 0; i < tokenCount; ++i)  //Debug Printer of tokenized String
@@ -351,8 +353,6 @@ bool CheckAnswer(int answer, int multiplesTotal, IntAndBool* answerKey)
 			return true;
 		}
 	}
-	toConsole("error");
-	return false;
 }//CheckAnswer
 
 int MainGameLoop(GameParameter parameters) // the main game loop.
