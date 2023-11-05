@@ -1,2 +1,3 @@
 ﻿  main.cpp
+C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\TestProject\main.cpp(12,9): warning C4101: 'intRemainder': unreferenced local variable
   TestProject.vcxproj -> C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\TestProject\x64\Debug\TestProject.exe
