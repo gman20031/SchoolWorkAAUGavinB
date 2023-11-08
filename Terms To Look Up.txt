@@ -1,0 +1,11 @@
+Vertecies
+the new keyword for arrays
+Hash Tables
+Hash set
+public and private types -- classes, methods, and member variables can be public, protected, and private
+the . and -> "operators"?
+the IO stream library
+how to include new libraries
+Template Functions
+'base' layer
+differences between my own math functions vs math header.
