@@ -1,5 +1,6 @@
 Vertecies
 the new keyword for arrays
+Link list
 Hash Tables
 Hash set
 public and private types -- classes, methods, and member variables can be public, protected, and private
