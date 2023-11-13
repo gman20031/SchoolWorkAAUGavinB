@@ -1,25 +1,22 @@
 #include <iostream>
+#include <vector>
+#include <string.h>
+#include <cstring>
+#include "Header.h"
 
-#define print(str) std::cout << str << std::endl
-#define flr(number) (int)number
+
 
 int main() {
-	constexpr double firstNumber = 30, secondNumber = 12;
+	// Call the function to get the vector
+	std::vector<MyStruct> mainVector = createAndFillVector();
 
-	double quotent;
-	int truncQuotent;
-	double doubRemainder;
-	int	   intRemainder;
+	// Access and print the elements of the main vector
+	for (const MyStruct& s : mainVector) {
+		std::cout << "myInt: " << s.myInt << ", myCharPointer: " << s.myCharPointer << std::endl;
 
-	quotent = firstNumber / secondNumber; // first get the result of the division									EX. 30 and 12 = 2.5
-											     // then get the number only equal to the area to the right of the decimal	- > 0.5
-	truncQuotent = flr(quotent);				 // get truncated version of quotent										flr(2.5) -> 2.0
-	doubRemainder = quotent - truncQuotent;		 // then remove the truncated version from quotent							2.5 - 2.0 = 0.5
-	doubRemainder = doubRemainder * secondNumber;
-
-	print(doubRemainder);
-
-	system("pause");
+		// Don't forget to free the allocated memory
+		delete[] s.myCharPointer;
+	}
 
 	return 0;
 }

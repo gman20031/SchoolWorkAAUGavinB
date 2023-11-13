@@ -17,87 +17,182 @@ Game Specification:
 	Traps
 	Multiple Levels (6?)
 
-	1 )				
-		# # # # # #			
-		# . . . . #
-		@ . . . . x
-		# . . . . #
-		# # # # # #
-
-	2 ) 
-		# # # # # # # #
-		# . . . . # x #
-		# . # # . # . #
-		# . . # . . . #
-		# # . # # # # #
-		@ . . . . . # #
-		# # # # . # # #
-		# # # . . . . #
-		# # # # # # # #
-
-	3 ) 
-		# # # # # #			
-		# . . ! . #
-		@ . . . . x
-		# . . . . #
-		# # # # # #
-
-	4 ) 
-	    # # # # # # # # # # # # #
-		# # # # # . . . . . . # #
-		# . . # . . # # # # . . #  
-		# # . . . # . . . . # . # 
-		# # # . # . . # # . # . #
-		# . . . . . . . # x # . #
-		@ . # # # # ! # # # # # #
-		# . # . # # . . . . . # #
-		# . # . . . . # # # . # #
-		# . . . # # . . . . . # #
-		# # # # # # # # # # # # #
-							   
-	5 ) 
-		# # # # # #
-		# . O . . #
-		@ . O . . x
-		# . . . O #
-		# # # # # #
-
-	6 )
-		# # # # # # # # # # # # # #
-		# . . . . # . . . . . # X #
-		# . . # . . . # # # . # . #
-		# . . # . . . # . . . # . #
-		# . # # O # # # . . . # . #
-		# . . . . . . . O . . # . #
-		# . # # # # . # ! . . # . #
-		# . . . . # . # . . . # . #
-		# . ! . . # . # . . ! # . #
-		@ . . . . # . # . . . . ! #
-		# . . . . # . # # # # # . #
-		# # # # # # # # # # # # # #
 */
 
 #include <iostream>
-#include <string>
 #include <vector>
+#include <fstream> // for filereading
+#include <locale>  // for upper Casing
+#include <conio.h> // _getch()
+#include "levels.h" // structs and getting level info from file
 
-struct enemy 
+#define myPrint(str) std::cout << str << std::endl
+
+class enemy 
 {
-private:
-	int xPos = 0;
-	int yPos = 0;
-	char currentDirection = 'n';
+	location loc_start;
+	location loc_current;
+	unsigned int currentDirection = 0;
+	enum directions
+	{
+		up = 0,
+		right = 1,
+		down = 2,
+		left = 3,
+	};
+	unsigned short int currentLoop = 0;
 	enum loopType
 	{
-		clockwiseCircle,
-		antiClockCircle,
-		horizontal,
-		verticle
+		horizontal = '|',
+		verticle = '-',
 	};
+	
+public:
 };
+
+void ChangePlayerPosition(levelInfo* curLevel, int x, int y);
+void UpdatePlayer(levelInfo* curLevel, std::vector<levelInfo>* allLevels, int x, int y);
+void MovePlayer(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input);
+void ChangeLevel(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input);
+void ResetLevel(levelInfo* curLevel);
+bool ProcessInput(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input);
 
 int main()
 {
+	std::vector<levelInfo> allLevels = GetAllLevels();
+
+	levelInfo curLevel = allLevels.at(0);
+
+	char input = 0;
+	while (true)
+	{
+			curLevel.PrintLevel();
+		input = toupper(_getch());
+		if (!(ProcessInput(&curLevel, &allLevels, input)))
+			break;
+		system("cls");
+	}
 
 	return 0;
+}
+
+void ChangePlayerPosition(levelInfo* curLevel, int x, int y)
+{
+	curLevel->mapArray[curLevel->playerCurIndex] = '.';
+	curLevel->playerCurX = x;
+	curLevel->playerCurY = y;
+	curLevel->UpdatePlayerIndex();
+	curLevel->mapArray[curLevel->playerCurIndex] = '@';
+}
+
+void UpdatePlayer(levelInfo* curLevel, std::vector<levelInfo>* allLevels, int x, int y)
+{
+	int index = curLevel->GetIndexAtCoordinates(x, y);
+
+	switch (curLevel->mapArray[index])
+	{
+	case '.':
+		ChangePlayerPosition(curLevel, x, y);
+		break;
+	case '#':
+		break;
+	case '|':
+	case '-':
+	case 'O':
+		curLevel->ResetPlayer();
+		break;
+	case 'x':
+		ResetLevel(curLevel);
+		ChangeLevel(curLevel, allLevels, '+');
+	}
+
+}
+
+void MovePlayer(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input)
+{
+	int tempX = curLevel->playerCurX;
+	int tempY = curLevel->playerCurY;
+
+	switch (input)
+	{
+	case 'W':
+		--tempY;
+		break;
+	case 'S':
+		++tempY;
+		break;
+	case 'A':
+		--tempX;
+		break;
+	case 'D':
+		++tempX;
+		break;
+	}
+	UpdatePlayer(curLevel, allLevels, tempX, tempY);
+}
+
+void ChangeLevel(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input)
+{
+	int totalLevel = allLevels->size() - 1;
+	int nextLevel = 0;
+	switch (input)
+	{
+	case '+':
+		nextLevel = curLevel->levelNumber + 1;
+		if (nextLevel > totalLevel)
+			nextLevel = 0;
+		break;
+	case '-':
+		nextLevel = curLevel->levelNumber - 1;
+		if (nextLevel < 0)
+			nextLevel = totalLevel;
+		break;
+	default:
+		return;
+	}
+	*curLevel = allLevels->at(nextLevel);
+}
+
+void ResetLevel(levelInfo* curLevel)
+{
+	//reset player position
+	curLevel->ResetPlayer();
+
+	//reset enemy locations
+	// TODORO
+}
+
+bool ProcessInput(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input)
+{
+	enum inputs
+	{
+		moveUp = 'W',
+		moveDown = 'S',
+		moveLeft = 'A',
+		moveRight = 'D',
+		quit = 'X',
+		reset = 'R',
+		nextLevel = '=',
+		prevLevel = '-',
+	};
+	switch (input)
+	{
+	case inputs::moveUp:
+	case inputs::moveDown:
+	case inputs::moveLeft:
+	case inputs::moveRight:
+		MovePlayer(curLevel, allLevels, input);
+		break;
+	case inputs::quit:
+		return false;
+	case inputs::reset:
+		ResetLevel(curLevel);
+		break;
+	case inputs::nextLevel:
+	case inputs::prevLevel:
+		ChangeLevel(curLevel, allLevels, input);
+	default:
+		return true;
+	}
+	return true;
 }
