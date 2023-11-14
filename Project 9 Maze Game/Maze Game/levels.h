@@ -2,6 +2,7 @@
 
 class enemy;
 class levelInfo;
+
 struct location
 {
 	int xPos = 0;
@@ -32,6 +33,7 @@ public:
 	void FillLocations(int index, int x, int y);
 	void SetType(char type);
 	void TurnAround();
+	void ResetEnemy(levelInfo* currLevel);
 	void StepEnemy(levelInfo *currLevel, int nextIndex);
 	int GetNextIndex(levelInfo *currLevel);
 };
@@ -50,10 +52,8 @@ public:
 	char* m_mapArray = nullptr;
 	std::vector<enemy> m_enemies;
 
-public:
 	~levelInfo() { delete m_mapArray; }
 
-public:
 	int GetXAtIndex(int index);
 	int GetYAtIndex(int index);
 	int GetIndexAtCoordinates(int x, int y);

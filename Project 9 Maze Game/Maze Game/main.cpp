@@ -28,13 +28,13 @@ Game Specification:
 
 #define myPrint(str) std::cout << str << std::endl
 
-void ChangePlayerPosition(levelInfo* curLevel, int x, int y);
-void UpdatePlayer(levelInfo* curLevel, std::vector<levelInfo>* allLevels, int x, int y);
-void MovePlayer(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input);
-void ChangeLevel(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input);
-void ResetLevel(levelInfo* curLevel);
-bool ProcessInput(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input);
-void MoveEnemies(levelInfo* curLevel);
+void ChangePlayerPosition(levelInfo* pCurLevel, int x, int y);
+void UpdatePlayer(levelInfo* pCurLevel, std::vector<levelInfo>* allLevels, int x, int y);
+void MovePlayer(levelInfo* pCurLevel, std::vector<levelInfo>* allLevels, char input);
+void ChangeLevel(levelInfo* pCurLevel, std::vector<levelInfo>* allLevels, char input);
+void ResetLevel(levelInfo* pCurLevel);
+bool ProcessInput(levelInfo* pCurLevel, std::vector<levelInfo>* allLevels, char input);
+void MoveEnemies(levelInfo* pCurLevel);
 
 int main()
 {
@@ -45,9 +45,9 @@ int main()
 	levelInfo curLevel = allLevels.at(0); // start at level 1
 
 	char input = 0;
-	while (true)
+	for (;;)
 	{
-			curLevel.PrintLevel();
+		curLevel.PrintLevel();
 		input = toupper(_getch());
 		if (!(ProcessInput(&curLevel, &allLevels, input)))
 			break;
@@ -57,68 +57,68 @@ int main()
 	return 0;
 }
 
-void ChangePlayerPosition(levelInfo* curLevel, int x, int y)
+void ChangePlayerPosition(levelInfo* pCurLevel, int x, int y)
 {
-	if(curLevel->m_mapArray[curLevel->m_playerCurIndex] == '@')
-		curLevel->m_mapArray[curLevel->m_playerCurIndex] = '.';
-	curLevel->m_playerCurX = x;
-	curLevel->m_playerCurY = y;
-	curLevel->UpdatePlayerIndex();
-	curLevel->m_mapArray[curLevel->m_playerCurIndex] = '@';
+	if (pCurLevel->m_mapArray[pCurLevel->m_playerCurIndex] == '@')
+		pCurLevel->m_mapArray[pCurLevel->m_playerCurIndex] = '.';
+	pCurLevel->m_playerCurX = x;
+	pCurLevel->m_playerCurY = y;
+	pCurLevel->UpdatePlayerIndex();
+	pCurLevel->m_mapArray[pCurLevel->m_playerCurIndex] = '@';
 }
 
-void UpdatePlayer(levelInfo* curLevel, std::vector<levelInfo>* allLevels, int x, int y)
+void UpdatePlayer(levelInfo* pCurLevel, std::vector<levelInfo>* allLevels, int x, int y)
 {
-	int index = curLevel->GetIndexAtCoordinates(x, y);
+	int index = pCurLevel->GetIndexAtCoordinates(x, y);
 
-	MoveEnemies(curLevel);
+	MoveEnemies(pCurLevel);
 
-	switch (curLevel->m_mapArray[index])
+	switch (pCurLevel->m_mapArray[index])
 	{
 	case '.':
-		ChangePlayerPosition(curLevel, x, y);
+		ChangePlayerPosition(pCurLevel, x, y);
 		break;
 	case '#':
 		break;
 	case '|':
 	case '-':
 	case 'O':
-		curLevel->ResetPlayer();
+		pCurLevel->ResetPlayer();
 		break;
 	case 'x':
-		ResetLevel(curLevel);
-		ChangeLevel(curLevel, allLevels, '+');
+		ResetLevel(pCurLevel);
+		ChangeLevel(pCurLevel, allLevels, '+');
 	}
-	if (curLevel->m_mapArray[curLevel->m_playerCurIndex] != '@')
-		ResetLevel(curLevel);
+	if (pCurLevel->m_mapArray[pCurLevel->m_playerCurIndex] != '@')
+		ResetLevel(pCurLevel);
 }
 
-void MoveEnemies(levelInfo* curLevel)
+void MoveEnemies(levelInfo* pCurLevel)
 {
 	// For every enemy in the game
 	// check if that enemy is going to walk into a wall
 	// if not, move to that location
 	// if it is, reverse the direction, then pause till next update.
-	for (int i = 0; i < curLevel->m_enemies.size(); ++i)
+	for (int i = 0; i < pCurLevel->m_enemies.size(); ++i)
 	{
-		int nextIndex = curLevel->m_enemies.at(i).GetNextIndex(curLevel);
-		char nextPosition = curLevel->m_mapArray[nextIndex];
+		int nextIndex = pCurLevel->m_enemies.at(i).GetNextIndex(pCurLevel);
+		char nextPosition = pCurLevel->m_mapArray[nextIndex];
 		if (nextPosition == '.' or nextPosition == '@')
 		{
-			curLevel->m_enemies.at(i).StepEnemy(curLevel, nextIndex);
+			pCurLevel->m_enemies.at(i).StepEnemy(pCurLevel, nextIndex);
 		}
 		else
 		{
-			curLevel->m_enemies.at(i).TurnAround();
+			pCurLevel->m_enemies.at(i).TurnAround();
 		}
 
 	}
 }
 
-void MovePlayer(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input)
+void MovePlayer(levelInfo* pCurLevel, std::vector<levelInfo>* allLevels, char input)
 {
-	int tempX = curLevel->m_playerCurX;
-	int tempY = curLevel->m_playerCurY;
+	int tempX = pCurLevel->m_playerCurX;
+	int tempY = pCurLevel->m_playerCurY;
 
 	switch (input)
 	{
@@ -135,41 +135,45 @@ void MovePlayer(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char inp
 		++tempX;
 		break;
 	}
-	UpdatePlayer(curLevel, allLevels, tempX, tempY);
+	UpdatePlayer(pCurLevel, allLevels, tempX, tempY);
 }
 
-void ChangeLevel(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input)
+void ChangeLevel(levelInfo* pCurLevel, std::vector<levelInfo>* allLevels, char input)
 {
 	int totalLevel = allLevels->size() - 1;
 	int nextLevel = 0;
+	ResetLevel(pCurLevel);
 	switch (input)
 	{
 	case '+':
-		nextLevel = curLevel->m_levelNumber + 1;
+		nextLevel = pCurLevel->m_levelNumber + 1;
 		if (nextLevel > totalLevel)
 			nextLevel = 0;
 		break;
 	case '-':
-		nextLevel = curLevel->m_levelNumber - 1;
+		nextLevel = pCurLevel->m_levelNumber - 1;
 		if (nextLevel < 0)
 			nextLevel = totalLevel;
 		break;
 	default:
 		return;
 	}
-	*curLevel = allLevels->at(nextLevel);
+	*pCurLevel = allLevels->at(nextLevel);
 }
 
-void ResetLevel(levelInfo* curLevel)
+void ResetLevel(levelInfo* pCurLevel)
 {
 	//reset player position
-	curLevel->ResetPlayer();
+	pCurLevel->ResetPlayer();
 
 	//reset enemy locations
-	// TODORO
+	for (int i = 0; i < pCurLevel->m_enemies.size(); ++i)
+	{
+		pCurLevel->m_enemies.at(i).ResetEnemy(pCurLevel);
+	}
 }
 
-bool ProcessInput(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input)
+bool ProcessInput(levelInfo* pCurLevel, std::vector<levelInfo>* allLevels, char input)
 {
 	enum inputs
 	{
@@ -188,17 +192,18 @@ bool ProcessInput(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char i
 	case inputs::moveDown:
 	case inputs::moveLeft:
 	case inputs::moveRight:
-		MovePlayer(curLevel, allLevels, input);
+		MovePlayer(pCurLevel, allLevels, input);
 		break;
 	case inputs::quit:
 		return false;
 	case inputs::reset:
-		ResetLevel(curLevel);
+		ResetLevel(pCurLevel);
 		break;
 	case inputs::nextLevel:
-		input = '+';
+		input = '+'; // ChangeLevel requires a + or - to increment or decrement level, and since pressing + on the keyboard returns = I change it to +
 	case inputs::prevLevel:
-		ChangeLevel(curLevel, allLevels, input);
+		ChangeLevel(pCurLevel, allLevels, input);
+		break;
 	default:
 		return true;
 	}

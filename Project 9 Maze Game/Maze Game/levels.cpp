@@ -44,7 +44,6 @@ void levelInfo::PrintLevel()
 		if (((i + 1) % (m_width)) == 0)
 			std::cout << std::endl;
 	}
-
 }
 
 void levelInfo::ResetPlayer()
@@ -139,6 +138,13 @@ void enemy::TurnAround() {
 			m_currentDirection = directions::up;
 	}
 
+}
+
+void enemy::ResetEnemy(levelInfo* currLevel)
+{
+	currLevel->m_mapArray[m_currentLoc.index] = '.';
+	m_currentLoc = m_startLoc;
+	currLevel->m_mapArray[m_currentLoc.index] = m_enemyType;
 }
 
 void ReadInFile(std::vector<std::string>* maps)
