@@ -28,40 +28,21 @@ Game Specification:
 
 #define myPrint(str) std::cout << str << std::endl
 
-class enemy 
-{
-	location loc_start;
-	location loc_current;
-	unsigned int currentDirection = 0;
-	enum directions
-	{
-		up = 0,
-		right = 1,
-		down = 2,
-		left = 3,
-	};
-	unsigned short int currentLoop = 0;
-	enum loopType
-	{
-		horizontal = '|',
-		verticle = '-',
-	};
-	
-public:
-};
-
 void ChangePlayerPosition(levelInfo* curLevel, int x, int y);
 void UpdatePlayer(levelInfo* curLevel, std::vector<levelInfo>* allLevels, int x, int y);
 void MovePlayer(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input);
 void ChangeLevel(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input);
 void ResetLevel(levelInfo* curLevel);
 bool ProcessInput(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input);
+void MoveEnemies(levelInfo* curLevel);
 
 int main()
 {
+	std::cout << "loading Level Info, if you see this something is wrong" << std::endl;
 	std::vector<levelInfo> allLevels = GetAllLevels();
+	system("cls");
 
-	levelInfo curLevel = allLevels.at(0);
+	levelInfo curLevel = allLevels.at(0); // start at level 1
 
 	char input = 0;
 	while (true)
@@ -78,18 +59,21 @@ int main()
 
 void ChangePlayerPosition(levelInfo* curLevel, int x, int y)
 {
-	curLevel->mapArray[curLevel->playerCurIndex] = '.';
-	curLevel->playerCurX = x;
-	curLevel->playerCurY = y;
+	if(curLevel->m_mapArray[curLevel->m_playerCurIndex] == '@')
+		curLevel->m_mapArray[curLevel->m_playerCurIndex] = '.';
+	curLevel->m_playerCurX = x;
+	curLevel->m_playerCurY = y;
 	curLevel->UpdatePlayerIndex();
-	curLevel->mapArray[curLevel->playerCurIndex] = '@';
+	curLevel->m_mapArray[curLevel->m_playerCurIndex] = '@';
 }
 
 void UpdatePlayer(levelInfo* curLevel, std::vector<levelInfo>* allLevels, int x, int y)
 {
 	int index = curLevel->GetIndexAtCoordinates(x, y);
 
-	switch (curLevel->mapArray[index])
+	MoveEnemies(curLevel);
+
+	switch (curLevel->m_mapArray[index])
 	{
 	case '.':
 		ChangePlayerPosition(curLevel, x, y);
@@ -105,13 +89,36 @@ void UpdatePlayer(levelInfo* curLevel, std::vector<levelInfo>* allLevels, int x,
 		ResetLevel(curLevel);
 		ChangeLevel(curLevel, allLevels, '+');
 	}
+	if (curLevel->m_mapArray[curLevel->m_playerCurIndex] != '@')
+		ResetLevel(curLevel);
+}
 
+void MoveEnemies(levelInfo* curLevel)
+{
+	// For every enemy in the game
+	// check if that enemy is going to walk into a wall
+	// if not, move to that location
+	// if it is, reverse the direction, then pause till next update.
+	for (int i = 0; i < curLevel->m_enemies.size(); ++i)
+	{
+		int nextIndex = curLevel->m_enemies.at(i).GetNextIndex(curLevel);
+		char nextPosition = curLevel->m_mapArray[nextIndex];
+		if (nextPosition == '.' or nextPosition == '@')
+		{
+			curLevel->m_enemies.at(i).StepEnemy(curLevel, nextIndex);
+		}
+		else
+		{
+			curLevel->m_enemies.at(i).TurnAround();
+		}
+
+	}
 }
 
 void MovePlayer(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char input)
 {
-	int tempX = curLevel->playerCurX;
-	int tempY = curLevel->playerCurY;
+	int tempX = curLevel->m_playerCurX;
+	int tempY = curLevel->m_playerCurY;
 
 	switch (input)
 	{
@@ -138,12 +145,12 @@ void ChangeLevel(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char in
 	switch (input)
 	{
 	case '+':
-		nextLevel = curLevel->levelNumber + 1;
+		nextLevel = curLevel->m_levelNumber + 1;
 		if (nextLevel > totalLevel)
 			nextLevel = 0;
 		break;
 	case '-':
-		nextLevel = curLevel->levelNumber - 1;
+		nextLevel = curLevel->m_levelNumber - 1;
 		if (nextLevel < 0)
 			nextLevel = totalLevel;
 		break;
@@ -189,6 +196,7 @@ bool ProcessInput(levelInfo* curLevel, std::vector<levelInfo>* allLevels, char i
 		ResetLevel(curLevel);
 		break;
 	case inputs::nextLevel:
+		input = '+';
 	case inputs::prevLevel:
 		ChangeLevel(curLevel, allLevels, input);
 	default:

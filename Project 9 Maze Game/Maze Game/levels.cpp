@@ -1,48 +1,47 @@
 #include <iostream>
 #include <vector>
 #include <fstream> // for filereading
-#include <conio.h> // _getch()
 #include <string> // strings
 #include "levels.h" // structs and getting level info from file
 
 
 
 void levelInfo::setCharacter() {
-	if (arraySize < 1) // cant run if struct not filled properly
+	if (m_arraySize < 1) // cant run if struct not filled properly
 	{
 		std::cout << ("levelInfo Not valid") << std::endl;
 		return;
 	}
-	mapArray[playerCurIndex] = '@';
+	m_mapArray[m_playerCurIndex] = '@';
 
 }
 
 int levelInfo::GetXAtIndex(int index)
 {
-	return index % width;
+	return index % m_width;
 }
 
 int levelInfo::GetYAtIndex(int index)
 {
-	return index / width;
+	return index / m_width;
 }
 
 int levelInfo::GetIndexAtCoordinates(int x, int y)
 {
-	return x + y * width;
+	return x + y * m_width;
 }
 
 void levelInfo::UpdatePlayerIndex()
 {
-	playerCurIndex = GetIndexAtCoordinates(playerCurX, playerCurY);
+	m_playerCurIndex = GetIndexAtCoordinates(m_playerCurX, m_playerCurY);
 }
 
 void levelInfo::PrintLevel()
 {
-	for (int i = 0; i < arraySize; ++i) // Make this faster???? idk, only better way to do this is to like, learn to unwrite stuff written, or using actual graphics library
+	for (int i = 0; i < m_arraySize; ++i) // Make this faster???? idk, only better way to do this is to like, learn to unwrite stuff written, or using actual graphics library
 	{
-		std::cout << mapArray[i] << ' ';
-		if (((i + 1) % (width)) == 0)
+		std::cout << m_mapArray[i] << ' ';
+		if (((i + 1) % (m_width)) == 0)
 			std::cout << std::endl;
 	}
 
@@ -51,11 +50,95 @@ void levelInfo::PrintLevel()
 void levelInfo::ResetPlayer()
 {
 	//reset player position
-	mapArray[playerCurIndex] = '.';
-	playerCurX = playerStartX;
-	playerCurY = playerStartY;
+	m_mapArray[m_playerCurIndex] = '.';
+	m_playerCurX = m_playerStartX;
+	m_playerCurY = m_playerStartY;
 	UpdatePlayerIndex();
-	mapArray[playerCurIndex] = '@';
+	m_mapArray[m_playerCurIndex] = '@';
+}
+
+void levelInfo::AddEnemy(char type, int index)
+{
+	/*
+		fills out info
+		m_startLoc;
+		m_currentLoc;	
+		m_currentDirection
+		m_enemyType;
+	*/
+	enemy tempEnemy;
+	tempEnemy.SetType(type);
+	tempEnemy.FillLocations(index, GetXAtIndex(index), GetYAtIndex(index));
+	m_enemies.push_back(tempEnemy);
+}
+
+void enemy::FillLocations(int index, int x, int y)
+{
+	m_startLoc.index = index;
+	m_startLoc.xPos = x;
+	m_startLoc.yPos = y;
+	m_currentLoc = m_startLoc;
+}
+
+void enemy::SetType(char type) {
+	m_enemyType = type;
+	switch (m_enemyType)
+	{
+	case enemyTypes::horizontal:
+		m_currentDirection = directions::right;
+		break;
+	case enemyTypes::verticle:
+		m_currentDirection = directions::up;
+	}
+}
+
+int enemy::GetNextIndex(levelInfo *currLevel)
+{	// this is the same code i used to get the player information........... hmmmmmmm
+	int tempX = m_currentLoc.xPos;
+	int tempY = m_currentLoc.yPos;
+	switch (m_currentDirection)
+	{
+	case directions::up:
+		--tempY;
+		break;
+	case directions::down:
+		++tempY;
+		break;
+	case directions::left:
+		--tempX;
+		break;
+	case directions::right:
+		++tempX;
+		break;
+	}
+	return (currLevel->GetIndexAtCoordinates(tempX, tempY));
+}
+
+void enemy::StepEnemy(levelInfo *currLevel, int nextIndex)
+{
+	currLevel->m_mapArray[m_currentLoc.index] = '.';
+	m_currentLoc.index = nextIndex;
+	m_currentLoc.xPos = currLevel->GetXAtIndex(nextIndex);
+	m_currentLoc.yPos = currLevel->GetYAtIndex(nextIndex);
+	currLevel->m_mapArray[m_currentLoc.index] = m_enemyType;
+}
+
+void enemy::TurnAround() {
+	switch (m_enemyType)
+	{
+	case enemyTypes::horizontal:
+		if (m_currentDirection == directions::left)
+			m_currentDirection = directions::right;
+		else
+			m_currentDirection = directions::left;
+		break;
+	case enemyTypes::verticle:
+		if (m_currentDirection == directions::up)
+			m_currentDirection = directions::down;
+		else
+			m_currentDirection = directions::up;
+	}
+
 }
 
 void ReadInFile(std::vector<std::string>* maps)
@@ -136,49 +219,55 @@ void ConvertToCString(char* cString, std::string* stdString)
 	}
 }
 
-void FillLevelInformation(levelInfo* currLevel, std::string* currMap, int currentIteration)
+void FillLevelInformation(levelInfo* pCurrLevel, std::string* pCurrMap, int currentIteration)
 {
-/* fills this information -- if information does not match struct, will not fill that information
-	int playerStartX = 0;
-	int playerStartY = 0;
-	int playerCurX = 0;
-	int playerCurY = 0;
-	int playerCurIndex = 0;
-	int arraySize = 0;
-	int width = 0;
-	int levelNumber = 0;
-	char* mapArray;
-*/
+	/* fills this information -- if information does not match struct, will not fill that information
+		int playerStartX = 0;
+		int playerStartY = 0;
+		int playerCurX = 0;
+		int playerCurY = 0;
+		int playerCurIndex = 0;
+		int arraySize = 0;
+		int width = 0;
+		int levelNumber = 0;
+		char* mapArray;
+		std::vector<enemy> m_enemies;
+	*/
 	// Get width -- lil cheat, but is the easiest solution I can think of right now
-	currLevel->width = currMap->at(currMap->size() - 1);
-	currMap->pop_back();
+	pCurrLevel->m_width = pCurrMap->at(pCurrMap->size() - 1);
+	pCurrMap->pop_back();
 
 	// Get array size
-	currLevel->arraySize = currMap->size();
+	pCurrLevel->m_arraySize = pCurrMap->size();
 
 	// Get player current index.
-	currLevel->playerCurIndex = currMap->find_first_of('@', currLevel->width); // I find the first occurance of @ starting at width since I know it will not be on the first line as it is ALWAYS a line of #
+	pCurrLevel->m_playerCurIndex = pCurrMap->find_first_of('@', pCurrLevel->m_width); // I find the first occurance of @ starting at width since I know it will not be on the first line as it is ALWAYS a line of #
 
 	// Get start and current X and Y's for the player
 	int tempX, tempY;
-	tempX = currLevel->GetXAtIndex(currLevel->playerCurIndex);
-	tempY = currLevel->GetYAtIndex(currLevel->playerCurIndex);
-	currLevel->playerCurX = tempX;
-	currLevel->playerStartX = tempX;
-	currLevel->playerCurY = tempY;
-	currLevel->playerStartY = tempY;
+	tempX = pCurrLevel->GetXAtIndex(pCurrLevel->m_playerCurIndex);
+	tempY = pCurrLevel->GetYAtIndex(pCurrLevel->m_playerCurIndex);
+	pCurrLevel->m_playerCurX = tempX;
+	pCurrLevel->m_playerStartX = tempX;
+	pCurrLevel->m_playerCurY = tempY;
+	pCurrLevel->m_playerStartY = tempY;
 
 	// Sets the level number
-	currLevel->levelNumber = currentIteration;
+	pCurrLevel->m_levelNumber = currentIteration;
 
 	// Allocate MapArray and convert string to c string to then allocate.
-	currLevel->mapArray = new char[currMap->size()];
-	ConvertToCString(currLevel->mapArray , currMap);;
+	pCurrLevel->m_mapArray = new char[pCurrMap->size()];
+	ConvertToCString(pCurrLevel->m_mapArray, pCurrMap);;
 
 	// Get Enemy start locations
-	for (int i = 0, tempIndex = 0; i >= 0; i = currMap->find_first_of('-', tempIndex))
+	for (int i = 0; i < pCurrMap->size(); ++i)
 	{
-
+		switch (pCurrMap->at(i))
+		{
+		case '|':
+		case '-':
+			pCurrLevel->AddEnemy(pCurrMap->at(i), i);
+		}
 	}
 }
 
