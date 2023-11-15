@@ -1,12 +1,11 @@
-Vertecies
-Template Functions
-the new keyword for arrays
-Link list
 public and private types -- classes, methods, and member variables can be public, protected, and private
-the . and -> "operators"?
-the IO stream library
+Template Functions
+variably size inputs for functions - va_list
+make my Own Vectors
+Link lists
 how to include new libraries
 'base' layer
 Hash Tables
 Hash set
+the IO stream library
 differences between my own math functions vs math header.

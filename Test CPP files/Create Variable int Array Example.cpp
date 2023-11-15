@@ -1,3 +1,7 @@
+// what the fuck is this??
+#include <cstdlib> // malloc needs this
+#include <cstdarg>
+
 int* CreateIntArray(int total, ...) //takes any number of int inputs and makes an array out of them
 {
 	va_list allInts; //is this just an empty data type?

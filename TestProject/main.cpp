@@ -1,22 +1,35 @@
 #include <iostream>
-#include <vector>
-#include <string.h>
-#include <cstring>
-#include "Header.h"
+#include <array>
 
+class myAss {
+public:
+	int *foo = nullptr;
+	int bar[3]{ 1,2,3 };
 
+	static void printArr(int * array) {
+		for (int i = 0; i < 3; ++i) {
+			std::cout << array[i] << ' ';
+		}
+		std::cout << std::endl;
+	}
+};
 
 int main() {
-	// Call the function to get the vector
-	std::vector<MyStruct> mainVector = createAndFillVector();
+	myAss objectOne;
+	objectOne.bar[1] = 4;
+	objectOne.foo = (int*)malloc(sizeof(int) * 3);
+	objectOne.foo[0] = 1;
+	objectOne.foo[1] = 2;
+	objectOne.foo[2] = 3;
 
-	// Access and print the elements of the main vector
-	for (const MyStruct& s : mainVector) {
-		std::cout << "myInt: " << s.myInt << ", myCharPointer: " << s.myCharPointer << std::endl;
+	myAss objectTwo = objectOne;
+	objectTwo.bar[2] = 4;
+	objectTwo.foo[2] = 4;
 
-		// Don't forget to free the allocated memory
-		delete[] s.myCharPointer;
-	}
+	myAss::printArr(objectOne.bar);
+	myAss::printArr(objectTwo.bar);
+	myAss::printArr(objectOne.foo);
+	myAss::printArr(objectTwo.foo);
 
-	return 0;
+
 }

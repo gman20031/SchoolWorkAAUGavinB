@@ -223,6 +223,7 @@ void ConvertToCString(char* cString, std::string* stdString)
 	{
 		cString[i] = stdString->at(i);
 	}
+	cString[stdString->size() + 1] = '\0';
 }
 
 void FillLevelInformation(levelInfo* pCurrLevel, std::string* pCurrMap, int currentIteration)
@@ -262,7 +263,7 @@ void FillLevelInformation(levelInfo* pCurrLevel, std::string* pCurrMap, int curr
 	pCurrLevel->m_levelNumber = currentIteration;
 
 	// Allocate MapArray and convert string to c string to then allocate.
-	pCurrLevel->m_mapArray = new char[pCurrMap->size()];
+	pCurrLevel->m_mapArray = new char[pCurrMap->size()+1];//+1 to add \0
 	ConvertToCString(pCurrLevel->m_mapArray, pCurrMap);;
 
 	// Get Enemy start locations
