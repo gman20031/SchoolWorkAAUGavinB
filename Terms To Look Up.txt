@@ -1,3 +1,4 @@
+Variable Prefixes (static, const, constexpr, long)
 public and private types -- classes, methods, and member variables can be public, protected, and private
 Template Functions
 variably size inputs for functions - va_list
