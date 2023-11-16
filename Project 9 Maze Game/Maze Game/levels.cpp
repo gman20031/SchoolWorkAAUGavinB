@@ -5,17 +5,6 @@
 #include "levels.h" // structs and getting level info from file
 
 
-
-void levelInfo::setCharacter() {
-	if (m_arraySize < 1) // cant run if struct not filled properly
-	{
-		std::cout << ("levelInfo Not valid") << std::endl;
-		return;
-	}
-	m_mapArray[m_playerCurIndex] = '@';
-
-}
-
 int levelInfo::GetXAtIndex(int index)
 {
 	return index % m_width;
@@ -38,17 +27,18 @@ void levelInfo::UpdatePlayerIndex()
 
 void levelInfo::PrintLevel()
 {
+	//Prints out the current cString that is the map
 	for (int i = 0; i < m_arraySize; ++i) // Make this faster???? idk, only better way to do this is to like, learn to unwrite stuff written, or using actual graphics library
 	{
 		std::cout << m_mapArray[i] << ' ';
-		if (((i + 1) % (m_width)) == 0)
+		if (((i + 1) % (m_width)) == 0) // unsure how modulo works, but is probably still pretty fast if using bitwise math.
 			std::cout << std::endl;
 	}
 }
 
 void levelInfo::ResetPlayer()
 {
-	//reset player position
+	//reset player position to where it started when the map was loaded in
 	m_mapArray[m_playerCurIndex] = '.';
 	m_playerCurX = m_playerStartX;
 	m_playerCurY = m_playerStartY;
@@ -59,11 +49,12 @@ void levelInfo::ResetPlayer()
 void levelInfo::AddEnemy(char type, int index)
 {
 	/*
-		fills out info
+		fills out info of enemy class
 		m_startLoc;
 		m_currentLoc;	
 		m_currentDirection
 		m_enemyType;
+		then adds it to the vector containing all enemies
 	*/
 	enemy tempEnemy;
 	tempEnemy.SetType(type);
@@ -73,6 +64,7 @@ void levelInfo::AddEnemy(char type, int index)
 
 void enemy::FillLocations(int index, int x, int y)
 {
+	// Takes the x,y, and index values of the enemy and fills sets the current and starting location structs to those values
 	m_startLoc.index = index;
 	m_startLoc.xPos = x;
 	m_startLoc.yPos = y;
@@ -80,6 +72,7 @@ void enemy::FillLocations(int index, int x, int y)
 }
 
 void enemy::SetType(char type) {
+	// sets the enemy type to the value specified by the argument.
 	m_enemyType = type;
 	switch (m_enemyType)
 	{
@@ -92,7 +85,9 @@ void enemy::SetType(char type) {
 }
 
 int enemy::GetNextIndex(levelInfo *currLevel)
-{	// this is the same code i used to get the player information........... hmmmmmmm
+{	
+	// Takes the current level, and finds the index of where the current enemy is supposed to move to.
+	// this is the same code i used to get the player information........... hmmmmmmm? except i use directions:: instead of wasd.. another reason to impliment a greater entity class and inherit instead.
 	int tempX = m_currentLoc.xPos;
 	int tempY = m_currentLoc.yPos;
 	switch (m_currentDirection)
@@ -115,6 +110,8 @@ int enemy::GetNextIndex(levelInfo *currLevel)
 
 void enemy::StepEnemy(levelInfo *currLevel, int nextIndex)
 {
+	// Moves the enemy's current location to the index provided
+	// sets the current location in the map array to . and sets the new location to this enemies type.
 	currLevel->m_mapArray[m_currentLoc.index] = '.';
 	m_currentLoc.index = nextIndex;
 	m_currentLoc.xPos = currLevel->GetXAtIndex(nextIndex);
@@ -123,6 +120,8 @@ void enemy::StepEnemy(levelInfo *currLevel, int nextIndex)
 }
 
 void enemy::TurnAround() {
+	//Switches the direction the enemy is facing, if left goes right and vice versa, and the same for up and down.
+
 	switch (m_enemyType)
 	{
 	case enemyTypes::horizontal:
@@ -142,6 +141,7 @@ void enemy::TurnAround() {
 
 void enemy::ResetEnemy(levelInfo* currLevel)
 {
+	// Resets the enemies location and position on the map array to the same as when loaded from the txt
 	currLevel->m_mapArray[m_currentLoc.index] = '.';
 	m_currentLoc = m_startLoc;
 	currLevel->m_mapArray[m_currentLoc.index] = m_enemyType;
@@ -149,6 +149,9 @@ void enemy::ResetEnemy(levelInfo* currLevel)
 
 void ReadInFile(std::vector<std::string>* maps)
 {
+	// Reads in the Maps.txt file cuts each map up based on where it encounters a '0'
+	// then adds that std::string to the vector containing all maps.
+	// if a end of file is reached before a 0 it will ignore it, though this is being buggy so beware adding to the .txt after the last 0
 	std::fstream myfile;
 	myfile.open("Maps.txt");
 	if (myfile.is_open())
@@ -172,6 +175,12 @@ void ReadInFile(std::vector<std::string>* maps)
 
 void CleanStrings(std::vector<std::string>* allStrings)
 {
+	// Takes a vector containt std::strings
+	// Removes all instances of a endline, space, and tab from every string.
+	// adds the width of the map to the end of the string, width based on the where the first endline is found
+	// only does the above as long as there were characters found, and not already found a width.
+	// this is in an attempt to stop start reading a string AT the endline, and thinking the width is zero, thus causing a divide by zero error in the future.
+	// This does not allow for making bad maps in the Txt file.
 	constexpr char  kendL = '\n',
 				kspace = ' ',
 				ktab = '\t';
@@ -204,6 +213,10 @@ void CleanStrings(std::vector<std::string>* allStrings)
 
 std::vector<std::string> GetMapStrings()
 {
+	// Reads in the Maps.TXT
+	// Cleans the maps to remove things like spaces(see cleanStrings function)
+	// organizes all of the maps into a vector and returns that vector
+
 	std::vector<std::string> allStrings;
 
 	ReadInFile(&allStrings);
@@ -228,7 +241,7 @@ void ConvertToCString(char* cString, std::string* stdString)
 
 void FillLevelInformation(levelInfo* pCurrLevel, std::string* pCurrMap, int currentIteration)
 {
-	/* fills this information -- if information does not match struct, will not fill that information
+	/* fills this information -- if information does not match class, will not fill that information
 		int playerStartX = 0;
 		int playerStartY = 0;
 		int playerCurX = 0;
@@ -240,6 +253,7 @@ void FillLevelInformation(levelInfo* pCurrLevel, std::string* pCurrMap, int curr
 		char* mapArray;
 		std::vector<enemy> m_enemies;
 	*/
+
 	// Get width -- lil cheat, but is the easiest solution I can think of right now
 	pCurrLevel->m_width = pCurrMap->at(pCurrMap->size() - 1);
 	pCurrMap->pop_back();
@@ -283,6 +297,11 @@ std::vector<levelInfo> GetAllLevels()
 	//wording help, for me more than you
 	// level = the idea of every piece of info needed to make a level
 	// map = the array that makes up what people look at.
+
+	// Gets all the map arrays from the maps.txt As std::strings
+	// then fills out all the informaion within the levelInfo class based on the maps imported
+	// and converts them to cStrings
+
 	std::vector<std::string> allMaps = GetMapStrings(); // get all maps 
 	std::vector<levelInfo> levelOutput(allMaps.size());
 	for (int i = 0; i < levelOutput.size(); ++i)

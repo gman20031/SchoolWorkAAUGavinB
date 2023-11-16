@@ -1,5 +1,7 @@
 #pragma once
 
+// I was told I should most likely split every object into their own header files. Sounds reasonable, but did not want to implement in this project
+
 class enemy;
 class levelInfo;
 
@@ -40,6 +42,15 @@ public:
 
 class levelInfo
 {
+	/*
+		This class contains all the information of the level
+		The information of level includes
+			the map array containng the characters that are the map being displayer
+			The width of the level
+			the number that level is
+			Every enemy within that level.
+			The player within that level.
+	*/
 public:
 	int m_playerStartX = 0;
 	int m_playerStartY = 0;
@@ -49,15 +60,14 @@ public:
 	int m_arraySize = 0;
 	int m_width = 0;
 	int m_levelNumber = 0;
-	char* m_mapArray = nullptr;
+	char* m_mapArray = nullptr; // this being a normal cstring caused many complications and annoyances
 	std::vector<enemy> m_enemies;
 
-	~levelInfo() { delete m_mapArray; }
+	~levelInfo() { delete m_mapArray; } // now this should let me not worry about memory deletion myself?
 
 	int GetXAtIndex(int index);
 	int GetYAtIndex(int index);
 	int GetIndexAtCoordinates(int x, int y);
-	void setCharacter();
 	void UpdatePlayerIndex();
 	void PrintLevel();
 	void ResetPlayer();
