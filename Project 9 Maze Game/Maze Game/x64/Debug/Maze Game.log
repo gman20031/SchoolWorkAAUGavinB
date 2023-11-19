@@ -1,7 +1,0 @@
-﻿  levels.cpp
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 9 Maze Game\Maze Game\levels.cpp(248,42): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 9 Maze Game\Maze Game\levels.cpp(251,56): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-  main.cpp
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 9 Maze Game\Maze Game\main.cpp(189,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Generating Code...
-  Maze Game.vcxproj -> C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 9 Maze Game\Maze Game\x64\Debug\Maze Game.exe

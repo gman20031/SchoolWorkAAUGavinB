@@ -18,6 +18,17 @@ Game Specification:
 	Multiple Levels (6?)
 
 */
+/*
+	Notes:
+	I have been told to use constexpr more, yet I found that just putting the character I want to be there, it makes it easier
+	however it makes it so ALL maps characters MUST be hardcoded\
+	I am unable to easily change all of the characters right now
+	I did a bit of this with ENUMS but I dont know the feeling between enums and constexpressions
+	However the Enums are almost all just put in the functions themselves and not the objects
+	I should have probably instead kept more enums within the objects so I can just call back to THAT instead of creating someting before.
+	idk
+*/
+
 
 #include <iostream>
 #include <vector>

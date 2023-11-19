@@ -5,6 +5,12 @@
 class enemy;
 class levelInfo;
 
+// the location and enemy stuct and class were created after teh level data class.
+// I should probably link together enemy, location, and level data.
+// create entity class, with information like location and type, then make enemy and player inherit a lot from there.
+// But the enemy moves automatically, and the player only moves when you tell it to.
+
+//Struct for holding location information of enemy objects
 struct location
 {
 	int xPos = 0;
@@ -12,6 +18,7 @@ struct location
 	int index = 0;
 };
 
+// Enemy class to contain all the information and functions required to automate the movement of enemies on the level
 class enemy
 {
 	location m_startLoc;
