@@ -1,0 +1,77 @@
+# # # # # # . . .	
+# . . . . # . . .
+@ . . . . x < - -
+# . . . . # . . .
+# # # # # # . . .
+0
+# # # # # # # #
+# . . . . # x #
+# . # # . # . #
+# . . # . . . #
+# # . # # # # #
+@ . . . . . # #
+# # # # . # # #
+# # # . . . . #
+# # # # # # # #
+0
+# # # # # #			
+# . . | . #
+@ . . . . x
+# - . . . #
+# # # # # #
+0
+# # # # # # # # # # # # #
+# # # # # . . . . . . # #
+# . . # . . # # # # . . #  
+# # . . . # . . . . # . # 
+# # # . # . . # # . # . #
+# . . . . . . . # x # . #
+@ . # # # # | # # # # # #
+# . # . # # . . . . . # #
+# . # . . . . # # # . # #
+# . . . # # . . . . . # #
+# # # # # # # # # # # # #
+0							   
+# # # # # #
+# . O . . #
+@ . O . . x
+# . . . O #
+# # # # # #
+0
+# # # # # # # # # # # # # #
+# . . . . # . . . . . # x #
+# . - # . | . # # # . # . #
+# . . # . . . # . . . # . #
+# . # # O # # # . . . # . #
+# . . . . . . . O . . # . #
+# . # # # # . # - . . # . #
+# . . . . # . # . O . # . #
+# . - . . # . # . . - # . #
+@ . . . . # . # . . . . | #
+# . . . . # . # # # # # . #
+# # # # # # # # # # # # # #
+0
+. . . . . . . . . . . . . . . .
+. C O N G R A T S . . Y O U . .
+. . . . . . . . . . . . . . . .
+. . . . . . W O N ! . . . . . .
+. . . . . . . . . . . . . . . .
+. E d i t . . M a p s . t x t .
+. . . . . . T O . . . . . . . .
+. . M a k e . . L e v e l s . .
+# # # # # # # # # # # # # # # #
+@ . . . . . . . . . . . . . . x
+# # # # # # # # # # # # # # # #
+0
+everything after the last (zero) will be ignored
+begin and end each level with a (zero character), including any many will break the level.
+level creation tutorial:
+Case matters for everything
+need a @ to be the player, only 1
+need a x to be the exit
+include a | or - to create enemies
+include captial O to create traps
+periods ( . ) are empty spaces
+all maps must be rectangles and the same width every line
+Spaces between characters are NOT required, but all levels will be displayed with characters between.
+Nothing will yell at you if you fail to do this, but it will not work properly.

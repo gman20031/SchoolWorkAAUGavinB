@@ -1,14 +1,47 @@
 #include <iostream>
 
+class myClass
+{
+	static inline int s_count = 0; 
+				/*
+				this count variable is now a global variable because of the static keyword
+				but is scope to specifically the myClass for our uses, and cannot be used
+				outside of this cpp file.
+				*/
+
+	int m_myInt;
+
+public:
+	myClass(int number) : m_myInt(number)
+	{
+		++s_count;
+	}
+	~myClass()
+	{
+		--s_count;
+	}
+
+	int GetInt() const { return m_myInt; }
+	int SetInt(int number) { m_myInt = number; }
+	/*
+		These functions implicitely send the function a pointer of the class it contains
+		it actually does this 
+		int GetInt(const myClass* this) const { return this->m_myInt; }
+		int GetInt(myClass* this , int number) { this->m_myInt = number; }
+	*/
+	static int GetCount() {return s_count;}
+	/*
+		This does NOT send the class, so the above line is literally what happens
+		so if I want to call this, I do not need an instance of the object
+		since it does not require it as part of the function parameters
+
+	*/
+
+
+};
+
 int main()
 {
-	// In original C, the use of static for both functions and variables has a simple use
-	// in addition to the simple use of static variables outlined in a different example file
-	// static functions and variables are both unable to be called from outside of the same file
-	// therefor if there is any capablility of someone gaining acess to your function while being in a different file
-	// they would be unable to use that function
-	// this is hard to make an example of, and to my current understanding is slightly redundant with the use of header files.
-
-	// in C++ comes member functions and variables, which have different meanings to normal
+	std::cout << myClass::GetCount();
 
 }
