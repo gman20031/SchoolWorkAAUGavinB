@@ -1,8 +1,0 @@
-VC++ directories
-Include Directories - > $(solutiondir)SDL-release-2.28.5\include
-Library Directories - > $(solutiondir)SDL-release-2.28.5\VisualC\x64\Debug
-Linker
-Input - > SDL2.lib
-	  SDL2main.lib
-	  SDL2test.lib
-Add DLL to project, move it to the root directory.
