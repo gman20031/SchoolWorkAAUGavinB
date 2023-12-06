@@ -19,17 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="LevelData.cpp" />
+    <ClCompile Include="Game\Enemy.cpp" />
+    <ClCompile Include="Game\Entity.cpp" />
+    <ClCompile Include="Game\Player.cpp" />
+    <ClCompile Include="LevelEditMenu.cpp" />
+    <ClCompile Include="Level\LevelData.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Entity.h" />
+    <ClInclude Include="Game\Enemy.h" />
+    <ClInclude Include="Game\Entity.h" />
+    <ClInclude Include="Game\Player.h" />
+    <ClInclude Include="LevelEditMenu.h" />
     <ClInclude Include="Level\LevelData.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="Menu.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

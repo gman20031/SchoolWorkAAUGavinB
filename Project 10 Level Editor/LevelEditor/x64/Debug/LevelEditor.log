@@ -1,2 +1,6 @@
-﻿  main.cpp
+﻿  LevelEditMenu.cpp
+  Menu.cpp
+C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\Menu.cpp(49,26): warning C4267: 'return': conversion from 'size_t' to 'const int', possible loss of data
+  main.cpp
+  Generating Code...
   LevelEditor.vcxproj -> C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\x64\Debug\LevelEditor.exe
