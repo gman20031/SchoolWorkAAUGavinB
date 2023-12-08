@@ -3,39 +3,34 @@
 #include "Level/LevelData.h"
 #include "Menu.h"
 
-class WallSelector : public Button
-{
 
-public:
-	using Button::Button;
+/*
+//BUTTONS NEEDED
+- TOP BUTTONS
+Wall select
+Enemy horizontal
+enemy Verticle
+Trap 
+Player 
+
+- Bottom Buttons
+Leave-> Save y/n prompt -> go to last menu
+Save -> y/n prompt
+Reset -> y/n prompt
+Resize -> height,width prompt -> y/n prompt
+*/
+
+class horizontalButtons
+{
 
 };
 
-class EnemyHorizontalSelector : Button 
+class LevelEditorButtons : public Button
 {
 
-public:
-	using Button::Button;
-};
-
-class EnemyVerticleSelector : Button
-{
-
-public:
-	using Button::Button;
-};
-
-class TrapSelector : Button
-{
-
-public:
-	using Button::Button;
 };
 
 class LevelEditMenu : public Menu
 {
-	levelInfo* m_pCurrentLevel;
-	std::vector
-public:
 
 };

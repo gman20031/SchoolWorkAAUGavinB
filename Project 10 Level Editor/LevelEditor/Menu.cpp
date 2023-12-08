@@ -7,17 +7,17 @@
 // Button Stuff
 //////////////////////////////////////////
 
-Button::Button(std::string name) : m_displayText(name)
-{
-		
-}
+Button::Button(std::string name , std::function<void()> eventFunction)
+	: m_displayText(name)
+	, m_eventFunction(eventFunction)
+{}
 
-const void Button::DisplayText()
+void Button::DisplayText() const
 {
 	std::cout << m_displayText;
 }
 
-const void Button::DispalyTextselected()
+void Button::DispalyTextselected() const
 {
 	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(consoleHandle, Menu::kSelectedColor);
@@ -25,26 +25,31 @@ const void Button::DispalyTextselected()
 	SetConsoleTextAttribute(consoleHandle, Menu::kStandarColor);
 }
 
+void Button::EventHandler() const
+{
+	m_eventFunction();
+}
+
 //////////////////////////////////////////
 // Menu Stuff
 //////////////////////////////////////////
 
-const void Menu::DisplayText()
+ void Menu::DisplayText() const
 {
 	std::cout << m_menuTitle << std::endl;
 }
 
-const void Menu::AddButton(Button* newButton)
+ void Menu::AddButton(Button* newButton) 
 {
 	m_allButtons.emplace_back(newButton);
 }
 
-const void Menu::InsertButton(int yPos, Button* newButton)
+ void Menu::InsertButton(int index, Button* newButton)  
 {
-	m_allButtons.emplace(m_allButtons.begin()+yPos, newButton);
+	m_allButtons.emplace(m_allButtons.begin()+index, newButton);
 }
 
-const int Menu::GetMenuLength()
+ size_t Menu::GetMenuLength() const
 {
 	return m_allButtons.size();
 }
