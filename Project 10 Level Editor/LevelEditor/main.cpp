@@ -9,109 +9,76 @@
 
 constexpr int kSpecialWindowsKey = -32;
 
-static location HandleArrowKey(location currLocation);
-const bool PrintRedString(std::string printedString);
-static const void PrintLevelEditor(levelInfo& levelOne);
+void HandleArrowKey(Menu* currentMenu);
+static void GotoMenuOne(Menu* currentMenu);
+static void DummyFunction(Menu* currentMenu);
+static void GotoRootMenu(Menu* currentMenu);
 
-location MapTarget = { 0,0 };
-location cursorLocation = { 0,0 };
-std::string test1 = "| testOne |";
-std::string test2 = "| two |";
-std::string test3 = "| three |";
-std::string test4 = "| four |";
-bool inMap = false;
+class Displayer
+{
+public:
+	Menu* currentMenu;
+
+};
 
 int main(int argc, char* argv[])
 {
-	levelInfo levelOne(4,4);
+	//levelInfo levelOne(4,4);
 
-	std::string name = "urdum";
-	WallSelector wallSelectButton(name);
-	wallSelectButton.DisplayText();
+	Menu testMenu("test", nullptr);
+	Menu subMenuTest("sub Menu One", &testMenu);
+	testMenu.AddSubMenu(&subMenuTest);
 
-	//for (;;)
-	//{
-	//	PrintLevelEditor(levelOne);
+	Menu* currentMenu = &testMenu;
 
-	//	char inputChar = _getch();
-	//	if (inputChar == kSpecialWindowsKey)
-	//	{
-	//		if(cursorLocation.y == 1)
-	//		{
-	//			MapTarget = HandleArrowKey(MapTarget);
-	//			if (MapTarget.y == levelOne.GetMapHeight())
-	//				cursorLocation.y += 1;
-	//			if (MapTarget.y < 0)
-	//				cursorLocation.y -= 1;
-	//			levelOne.EnsureInBounds(MapTarget);
-	//		}
-	//		else
-	//		{
-	//			cursorLocation = HandleArrowKey(cursorLocation);
-	//		}
-	//	}
-	//	system("cls");
-	//}
-	
-	
+	Button SubMenuButtonOne("sub Menu One", &GotoMenuOne);
+	Button returnButton("Return", &GotoRootMenu);
+
+	Button dummyButton1("dummy", &DummyFunction);
+	Button dummyButton2("dummy", &DummyFunction);
+
+	testMenu.AddButtonNewLine(&dummyButton1);
+	testMenu.AddButtonNewLine(&SubMenuButtonOne);
+
+	subMenuTest.AddButtonNewLine(&dummyButton1);
+	subMenuTest.InsertButton(1, 0, &dummyButton2);
+	subMenuTest.AddButtonNewLine(&returnButton);
+
+	testMenu.SetCursorLocation({ 0,0 });
+	subMenuTest.SetCursorLocation({ 0,0 });
+	for (;;)
+	{
+		system("cls");
+		currentMenu->DisplayAllText();
+		char input = _getch();
+		if (input == 'e')
+			currentMenu->PressSelectedButton(currentMenu);
+		else if (input == kSpecialWindowsKey)
+		{
+			HandleArrowKey(currentMenu);
+		}
+	}
+
 	return 0;
 }
 
-static const void PrintLevelEditor(levelInfo& levelOne)
+static void GotoMenuOne(Menu* currentMenu)
 {
-	if (cursorLocation.y == 0)
-	{
-		if (cursorLocation.x == 0)
-		{
-			PrintRedString(test1);
-			std::cout << test2;
-		}
-		if (cursorLocation.x == 1)
-		{
-			std::cout << test1;
-			PrintRedString(test2);
-		}
-		std::cout << std::endl;
-	}
-	else
-		std::cout << test1 << test2 << std::endl;
-
-	if (cursorLocation.y == 1)
-		levelOne.PrintSelect(MapTarget);
-	else
-		levelOne.PrintNoSelect();
-
-	if (cursorLocation.y == 2)
-	{
-		if (cursorLocation.x == 0)
-		{
-			PrintRedString(test3);
-			std::cout << test4;
-		}
-		if (cursorLocation.x == 1)
-		{
-			std::cout << test3;
-			PrintRedString(test4);
-		}
-		std::cout << std::endl;
-	}
-	else
-		std::cout << test3 << test4 << std::endl;
+	currentMenu = currentMenu->GetSubMenu(0);
 }
 
-const bool PrintRedString(std::string printedString)
+static void DummyFunction(Menu* currentMenu)
 {
-	constexpr int kRedConsoleColor = 4;
-	constexpr int kStandardConsoleColor = 7;
 
-	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(consoleHandle, kRedConsoleColor);
-	std::cout << printedString;
-	SetConsoleTextAttribute(consoleHandle, kStandardConsoleColor);
-	return true;
 }
 
-static location HandleArrowKey(location currLocation)
+static void GotoRootMenu(Menu* currentMenu)
+{
+	currentMenu = currentMenu->GetRootMenu();
+}
+
+
+void HandleArrowKey(Menu* currentMenu)
 {
 	enum arrowKeys {
 		right = 77,
@@ -124,17 +91,16 @@ static location HandleArrowKey(location currLocation)
 	switch (dummyChar)
 	{
 	case arrowKeys::right:
-		++currLocation.x;
+		currentMenu->MoveCursor(Menu::Direction::kRight);
 		break;
 	case arrowKeys::down:
-		++currLocation.y;
+		currentMenu->MoveCursor(Menu::Direction::kDown);
 		break;
 	case arrowKeys::up:
-		--currLocation.y;
+		currentMenu->MoveCursor(Menu::Direction::kUp);
 		break;
 	case arrowKeys::left:
-		--currLocation.x;
+		currentMenu->MoveCursor(Menu::Direction::kLeft);
 		break;
 	}
-	return currLocation;
 }

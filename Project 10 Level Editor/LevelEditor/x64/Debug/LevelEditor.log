@@ -1,54 +1,5 @@
-﻿  LevelEditMenu.cpp
-  Menu.cpp
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\LevelEditMenu.h(52,3): warning C4060: switch statement contains no 'case' or 'default' labels
-  (compiling source file 'LevelEditMenu.cpp')
-  
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\LevelEditMenu.h(59,7): error C2955: 'std::vector': use of class template requires template argument list
-  (compiling source file 'LevelEditMenu.cpp')
-  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\vector(436,1):
-  see declaration of 'std::vector'
-  
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\LevelEditMenu.h(60,1): error C2059: syntax error: 'public'
-  (compiling source file 'LevelEditMenu.cpp')
-  
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\LevelEditMenu.h(62,1): error C2760: syntax error: '}' was unexpected here; expected 'expression'
-  (compiling source file 'LevelEditMenu.cpp')
-  
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\LevelEditMenu.h(60,7): error C2150: 'LevelEditMenu::<alignment member>': bit field must have type 'int', 'signed int', or 'unsigned int'
-  (compiling source file 'LevelEditMenu.cpp')
-  
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\LevelEditMenu.h(62,1): error C2059: syntax error: '}'
-  (compiling source file 'LevelEditMenu.cpp')
-  
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\Menu.cpp(10,18): error C2511: 'AbstractButtons::AbstractButtons(std::string)': overloaded member function not found in 'AbstractButtons'
-  C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\Menu.h(7,7):
-  see declaration of 'AbstractButtons'
-  
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\Menu.cpp(12,1): error C2550: 'AbstractButtons::{ctor}': constructor initializer lists are only allowed on constructor definitions
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\Menu.cpp(50,26): warning C4267: 'return': conversion from 'size_t' to 'const int', possible loss of data
-  main.cpp
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\LevelEditMenu.h(52,3): warning C4060: switch statement contains no 'case' or 'default' labels
+﻿  main.cpp
+C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\Menu.h(44,3): warning C4091: 'static ': ignored on left of 'Menu::Direction' when no variable is declared
   (compiling source file 'main.cpp')
   
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\LevelEditMenu.h(59,7): error C2955: 'std::vector': use of class template requires template argument list
-  (compiling source file 'main.cpp')
-  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\include\vector(436,1):
-  see declaration of 'std::vector'
-  
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\LevelEditMenu.h(60,1): error C2059: syntax error: 'public'
-  (compiling source file 'main.cpp')
-  
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\LevelEditMenu.h(62,1): error C2760: syntax error: '}' was unexpected here; expected 'expression'
-  (compiling source file 'main.cpp')
-  
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\LevelEditMenu.h(60,7): error C2150: 'LevelEditMenu::<alignment member>': bit field must have type 'int', 'signed int', or 'unsigned int'
-  (compiling source file 'main.cpp')
-  
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\LevelEditMenu.h(62,1): error C2059: syntax error: '}'
-  (compiling source file 'main.cpp')
-  
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\main.cpp(29,2): error C2065: 'WallSelector': undeclared identifier
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\main.cpp(29,15): error C2146: syntax error: missing ';' before identifier 'wallSelectButton'
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\main.cpp(29,15): error C3861: 'wallSelectButton': identifier not found
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\main.cpp(30,2): error C2065: 'wallSelectButton': undeclared identifier
-  Generating Code...
+  LevelEditor.vcxproj -> C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\x64\Debug\LevelEditor.exe
