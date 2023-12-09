@@ -1,35 +1,70 @@
 #pragma once
+#include <string>
+#include <fstream>
 
 #include "Level/LevelData.h"
 #include "Menu.h"
 
-/*
-//BUTTONS NEEDED
-- TOP BUTTONS
-Wall select
-Enemy horizontal
-enemy Verticle
-Trap 
-Player 
+class LevelButton;
 
-- Bottom Buttons
-Leave-> Save y/n prompt -> go to last menu
-Save -> y/n prompt
-Reset -> y/n prompt
-Resize -> height,width prompt -> y/n prompt
-*/
-
-class horizontalButtons
+class LevelEditMenu
 {
+	//"LevelData\CustomLevels\TESTFILE.txt"
 
+	static constexpr int kTopButtonLength = 6;
+	static constexpr int kBotButtonLength = 4;
+	LevelButton* m_pTopButtons;
+	LevelButton* m_pBottomButtons;
+	levelInfo m_editedLevel;
+	std::ofstream m_currentFile;
+	std::string m_currentFilePath = "LevelData\\CustomLevels\\TESTFILE.txt";
+
+	Location m_cursorLocation;
+
+	bool m_keepEditing;
+	bool m_inMap;
+public:
+	LevelEditMenu(const char* filePath);
+	~LevelEditMenu();
+
+	void ChangeSelectedChar(char newChar);
+	bool SaveToFile();
+	void ReizeMap();
+	void ClearMap();
+	void ReturnToMenus();
+
+	void MoveCursor(Direction direction);
+	void PrintEditMenu();
 };
 
-class LevelEditorButtons : public Button
+class LevelButton : public Button
 {
+public:
+	enum class ButtonTypes
+	{
+		ChangeSelectedChar,
+		SaveToFile,
+		ReizeMap,
+		ClearMap,
+		ReturnToMenus,
+	};
 
-};
+private:
+	LevelEditMenu* m_linkedMenu;
+	ButtonTypes m_buttonFunction;
+	char m_charChanger;
 
-class LevelEditMenu : public Menu
-{
+public:
+	LevelButton() = default;
+	LevelButton(ButtonTypes button, const char* displayText,
+				LevelEditMenu* linkedMenu, char charChanger = 0);
+
+
+	void EventHandler();
+
+	//std::string m_displayText; - inherited
+	//bool m_isSelected; - inherited
+	//void DisplayText() const; - inherited
+	//void DisplayTextselected() const; - inherited
 
 };

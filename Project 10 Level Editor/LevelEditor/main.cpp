@@ -2,105 +2,74 @@
 #include <windows.h>
 #include <conio.h>
 #include <string>
+#include <filesystem>
 
 #include "Level/LevelData.h"
 #include "Menu.h"
 #include "LevelEditMenu.h"
+#include "Inputs.h"
 
 constexpr int kSpecialWindowsKey = -32;
 
-void HandleArrowKey(Menu* currentMenu);
-static void GotoMenuOne(Menu* currentMenu);
-static void DummyFunction(Menu* currentMenu);
-static void GotoRootMenu(Menu* currentMenu);
-
-class Displayer
-{
-public:
-	Menu* currentMenu;
-
-};
+void GotoEditMenu(std::vector<Menu*>& menuStack);
+void CreateNewLevel(std::vector<Menu*>& menuStack);
+void EditExistingLevel(std::vector<Menu*>& menuStack);
+void AddAllExistingLevels(Menu& levelsMenu);
 
 int main(int argc, char* argv[])
 {
-	//levelInfo levelOne(4,4);
+	std::vector<Menu*> menuStack;
 
-	Menu testMenu("test", nullptr);
-	Menu subMenuTest("sub Menu One", &testMenu);
-	testMenu.AddSubMenu(&subMenuTest);
+	Menu baseMenu("Maze Game \n press 'e' to interact", nullptr);
+	MenuButton B_gotoEditMenu("Edit Levels", &GotoEditMenu);
+	menuStack.push_back(&baseMenu);
 
-	Menu* currentMenu = &testMenu;
+	Menu editorMenu("Edit Level", &baseMenu);
+	MenuButton B_createNewLevel("New Level", &CreateNewLevel);
+	MenuButton B_editExistingLevel("Edit Existing", &EditExistingLevel);
 
-	Button SubMenuButtonOne("sub Menu One", &GotoMenuOne);
-	Button returnButton("Return", &GotoRootMenu);
+	Menu existingLevelsMenu("Existing Levels", &editorMenu);
+	AddAllExistingLevels(existingLevelsMenu);
 
-	Button dummyButton1("dummy", &DummyFunction);
-	Button dummyButton2("dummy", &DummyFunction);
-
-	testMenu.AddButtonNewLine(&dummyButton1);
-	testMenu.AddButtonNewLine(&SubMenuButtonOne);
-
-	subMenuTest.AddButtonNewLine(&dummyButton1);
-	subMenuTest.InsertButton(1, 0, &dummyButton2);
-	subMenuTest.AddButtonNewLine(&returnButton);
-
-	testMenu.SetCursorLocation({ 0,0 });
-	subMenuTest.SetCursorLocation({ 0,0 });
 	for (;;)
 	{
 		system("cls");
-		currentMenu->DisplayAllText();
+		menuStack.back()->DisplayAllText();
 		char input = _getch();
 		if (input == 'e')
-			currentMenu->PressSelectedButton(currentMenu);
+			menuStack.back()->PressSelectedButton(menuStack);
 		else if (input == kSpecialWindowsKey)
 		{
-			HandleArrowKey(currentMenu);
+			Inputs::HandleArrowKey(menuStack.back()->GetTargetLocation());
 		}
 	}
 
 	return 0;
 }
 
-static void GotoMenuOne(Menu* currentMenu)
+void GotoFistMenu(std::vector<Menu*>& menuStack) 
 {
-	currentMenu = currentMenu->GetSubMenu(0);
+	menuStack.push_back(menuStack.back()->GetSubMenu(0));
 }
 
-static void DummyFunction(Menu* currentMenu)
+void CreateNewLevel(std::vector<Menu*>& menuStack)
+{
+	std::ofstream file;
+	file.open("hello");
+	file << '#';
+
+}
+void EditExistingLevel(std::vector<Menu*>& menuStack)
+{
+
+}
+void AddAllExistingLevels(Menu& levelsMenu)
 {
 
 }
 
-static void GotoRootMenu(Menu* currentMenu)
-{
-	currentMenu = currentMenu->GetRootMenu();
-}
-
-
-void HandleArrowKey(Menu* currentMenu)
-{
-	enum arrowKeys {
-		right = 77,
-		down = 80,
-		up = 72,
-		left = 75
-	};
-
-	char dummyChar = _getch();
-	switch (dummyChar)
-	{
-	case arrowKeys::right:
-		currentMenu->MoveCursor(Menu::Direction::kRight);
-		break;
-	case arrowKeys::down:
-		currentMenu->MoveCursor(Menu::Direction::kDown);
-		break;
-	case arrowKeys::up:
-		currentMenu->MoveCursor(Menu::Direction::kUp);
-		break;
-	case arrowKeys::left:
-		currentMenu->MoveCursor(Menu::Direction::kLeft);
-		break;
-	}
-}
+//for (const auto& entry : std::filesystem::directory_iterator("..\\LevelEditor\\LevelData\\CustomLevels"))
+//{
+//	std::string temp = entry.path().filename().string();
+//	std::cout << temp << '\n';
+//}

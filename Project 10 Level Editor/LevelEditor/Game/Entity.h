@@ -5,18 +5,18 @@
 class Entity {
 
 protected:
-	location	m_currentLocation;
-	location	m_startingLocation;
+	Location	m_currentLocation;
+	Location	m_startingLocation;
 	levelInfo*	pThislevel;
 
 public:
 	void ResetLocation();
 
-	const location GetCurrentLocation();
-	void SetCurrentLocation(location newLocation);
+	const Location GetCurrentLocation();
+	void SetCurrentLocation(Location newLocation);
 	void SetCurrentLocation(int newX, int newY);
 
-	const location GetStartingLocation();
-	void SetStartingLocation(location newLocation);
+	const Location GetStartingLocation();
+	void SetStartingLocation(Location newLocation);
 	void SetStartingLocation(int newX, int newY);
 };

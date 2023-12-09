@@ -1,5 +1,5 @@
-﻿  main.cpp
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\Menu.h(44,3): warning C4091: 'static ': ignored on left of 'Menu::Direction' when no variable is declared
-  (compiling source file 'main.cpp')
-  
+﻿  LevelEditMenu.cpp
+  LevelData.cpp
+  Menu.cpp
+  Generating Code...
   LevelEditor.vcxproj -> C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 10 Level Editor\LevelEditor\x64\Debug\LevelEditor.exe

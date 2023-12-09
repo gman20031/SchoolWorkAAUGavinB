@@ -3,49 +3,38 @@
 #include <algorithm>
 
 #include "Menu.h"
+#include "Inputs.h"
 
 //////////////////////////////////////////
 // Button Stuff
 //////////////////////////////////////////
 
-Button::Button(const char* name, std::function<void(Menu*)> eventFunction)
+MenuButton::MenuButton(const char* name, std::function<void(std::vector<Menu*>&)> eventFunction)
 	: m_eventFunction(eventFunction)
 {
 	m_isSelected = false;
 	m_displayText = name;
 }
 
-void Button::DisplayText() const
+void MenuButton::EventHandler(std::vector<Menu*>& MenuStack) const
 {
-	std::cout << m_displayText;
-}
-
-void Button::DisplayTextselected() const
-{
-	HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(consoleHandle, Menu::kRedColor);
-	std::cout << m_displayText;
-	SetConsoleTextAttribute(consoleHandle, Menu::kStandarColor);
-}
-
-void Button::EventHandler(Menu* currentMenu) const
-{
-	m_eventFunction(currentMenu);
+	m_eventFunction(MenuStack);
 }
 
 //////////////////////////////////////////
 // Menu Stuff
 //////////////////////////////////////////
 
-Button* Menu::GetButtonAt(location target)
-{
-	return m_buttonGrid.at(m_targetButtonLocation.y).at(m_targetButtonLocation.x);
-}
-
 Menu::Menu(const char* title, Menu* rootMenu) : m_rootMenu(rootMenu)
 {
+	rootMenu->AddSubMenu(this);
 	m_menuTitle = title;
 	m_targetButtonLocation = { 0,0 };
+}
+
+MenuButton* Menu::GetButtonAt(Location target)
+{
+	return m_buttonGrid.at(m_targetButtonLocation.y).at(m_targetButtonLocation.x);
 }
 
 void Menu::AddSubMenu(Menu* newSubMenu)
@@ -53,10 +42,10 @@ void Menu::AddSubMenu(Menu* newSubMenu)
 	m_subMenus.push_back(newSubMenu);
 }
 
-Menu* Menu::GetRootMenu()
-{
-	return m_rootMenu;
-}
+//Menu* Menu::GetRootMenu()
+//{
+//	return m_rootMenu;
+//}
 
 Menu* Menu::GetSubMenu(int index)
 {
@@ -80,13 +69,13 @@ Menu* Menu::GetSubMenu(int index)
 	}
 }
 
- void Menu::AddButtonNewLine(Button* newButton)
+ void Menu::AddButtonNewLine(MenuButton* newButton)
 {
 	 m_buttonGrid.emplace_back();
 	 m_buttonGrid.back().push_back(newButton);
 }
 
- void Menu::InsertButton(int xPos, int yPos, Button* newButton)
+ void Menu::InsertButton(int xPos, int yPos, MenuButton* newButton)
 {
 	 auto index = m_buttonGrid.at(yPos).begin() + xPos;
 	 m_buttonGrid.at(yPos).insert(index, newButton);
@@ -102,7 +91,7 @@ Menu* Menu::GetSubMenu(int index)
 	return m_buttonGrid.at(yPos).size();
  }
 
- void Menu::SetCursorLocation(location newLocation)
+ void Menu::SetCursorLocation(Location newLocation)
  {
 	 if(GetButtonAt(m_targetButtonLocation)->m_isSelected)
 		 GetButtonAt(m_targetButtonLocation)->m_isSelected = false;
@@ -118,25 +107,19 @@ Menu* Menu::GetSubMenu(int index)
 
  void Menu::MoveCursor(Direction direction)
  {
-	 GetButtonAt(m_targetButtonLocation)->m_isSelected = false;
-	 switch (direction)
-	 {
-	 case Direction::kDown:
-		 ++m_targetButtonLocation.y; break;
-	 case Direction::kUp:
-		 --m_targetButtonLocation.y; break;
-	 case Direction::kLeft:
-		 --m_targetButtonLocation.x; break;
-	 case Direction::kRight:
-		 ++m_targetButtonLocation.x; break;
-	 }
-	 EnsureInBounds();
-	 GetButtonAt(m_targetButtonLocation)->m_isSelected = true;
+	GetButtonAt(m_targetButtonLocation)->m_isSelected = false;
+	Inputs::MoveLocation(&m_targetButtonLocation, direction);
+	EnsureInBounds();
+	GetButtonAt(m_targetButtonLocation)->m_isSelected = true;
+ }
+
+ Location* Menu::GetTargetLocation()
+ {
+	 return &m_targetButtonLocation;
  }
 
 
-
- void Menu::PressSelectedButton(Menu* currentMenu)
+ void Menu::PressSelectedButton(std::vector<Menu*>& menuStack)
  {
-	 GetButtonAt(m_targetButtonLocation)->EventHandler(currentMenu);
+	 GetButtonAt(m_targetButtonLocation)->EventHandler(menuStack);
  }

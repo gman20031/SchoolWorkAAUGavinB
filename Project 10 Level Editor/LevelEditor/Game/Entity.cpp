@@ -8,12 +8,12 @@ void Entity::ResetLocation()
 	m_currentLocation = m_startingLocation;
 }
 
-const location Entity::GetCurrentLocation()
+const Location Entity::GetCurrentLocation()
 {
 	return m_currentLocation;
 }
 
-void Entity::SetCurrentLocation(location newLocation)
+void Entity::SetCurrentLocation(Location newLocation)
 {
 	m_currentLocation = newLocation;
 }
@@ -24,12 +24,12 @@ void Entity::SetCurrentLocation(int newX, int newY)
 	m_currentLocation.y = newY;
 }
 
-const location Entity::GetStartingLocation()
+const Location Entity::GetStartingLocation()
 {
 	return m_startingLocation;
 }
 
-void Entity::SetStartingLocation(location newLocation)
+void Entity::SetStartingLocation(Location newLocation)
 {
 	m_startingLocation = newLocation;
 }

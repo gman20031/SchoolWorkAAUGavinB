@@ -5,28 +5,28 @@
 
 class Enemy : Entity
 {
-	static enum class direction
+	enum class direction
 	{
 		up = 0,
 		right = 1,
 		down = 2,
 		left = 3,
-	};
+	} static;
 	int  m_currentDirection;
 	char m_enemyType;
 
 	void TurnAround();
 
 public:
-	static enum class enemyType {
+	enum class enemyType {
 		horizontol = '-',
 		verticle = '|',
-	};
+	} static;
 
-	Enemy(char type, location start);
+	Enemy(char type, Location start);
 
-	location GetNextLocation();
+	Location GetNextLocation();
 	void ResetEnemy();
-	void StepEnemy(location nextLocation);
+	void StepEnemy(Location nextLocation);
 
 };

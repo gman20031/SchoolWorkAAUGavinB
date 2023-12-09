@@ -19,20 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Game\Enemy.cpp" />
     <ClCompile Include="Game\Entity.cpp" />
     <ClCompile Include="Game\Player.cpp" />
+    <ClCompile Include="Inputs.cpp" />
     <ClCompile Include="LevelEditMenu.cpp" />
     <ClCompile Include="Level\LevelData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Game\Enemy.h" />
     <ClInclude Include="Game\Entity.h" />
     <ClInclude Include="Game\Player.h" />
+    <ClInclude Include="Inputs.h" />
     <ClInclude Include="LevelEditMenu.h" />
     <ClInclude Include="Level\LevelData.h" />
+    <ClInclude Include="LocationAndDirection.h" />
     <ClInclude Include="Menu.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

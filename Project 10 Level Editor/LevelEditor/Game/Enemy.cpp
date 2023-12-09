@@ -4,7 +4,7 @@
 #include "Entity.h"
 #include "Enemy.h"
 
-Enemy::Enemy(char type, location start)
+Enemy::Enemy(char type, Location start)
 {
 	assert(type == (char)enemyType::horizontol or type == (char)enemyType::verticle);
 	m_startingLocation = start;
@@ -23,9 +23,9 @@ Enemy::Enemy(char type, location start)
 
 }
 
-location Enemy::GetNextLocation()
+Location Enemy::GetNextLocation()
 {
-	location nextLocation = m_currentLocation;
+	Location nextLocation = m_currentLocation;
 	switch (m_currentDirection)
 	{
 	case (int)direction::up:
@@ -76,7 +76,7 @@ void Enemy::ResetEnemy()
 	}
 }
 
-void Enemy::StepEnemy(location nextLocation)
+void Enemy::StepEnemy(Location nextLocation)
 {
 	if (pThislevel->GetAt(nextLocation) == levelInfo::kEmptySpaceChar)
 	{

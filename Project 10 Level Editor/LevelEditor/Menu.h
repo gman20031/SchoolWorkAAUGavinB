@@ -2,25 +2,22 @@
 #include <string>
 #include <functional>
 
+#include "LocationAndDirection.h"
+#include "Button.h"
 #include "Level/levelData.h"
 class Menu;
 
-class Button
+
+
+class MenuButton : public Button
 {
 protected:
-	std::string m_displayText;
-	//Menu*		m_rootMenu;
-	std::function<void(Menu*)> m_eventFunction;
-	
+	std::function<void(std::vector<Menu*>&)> m_eventFunction;
+
 
 public:
-	bool m_isSelected;
-
-	Button(const char* name, std::function<void(Menu*)> eventFunction);
-
-	void DisplayText() const;
-	void DisplayTextselected() const;
-	void EventHandler(Menu* currentMenu) const;
+	MenuButton(const char* name, std::function<void(std::vector<Menu*>&)> eventFunction);
+	void EventHandler(std::vector<Menu*>& menuStack) const;
 };
 
 class Menu
@@ -29,37 +26,31 @@ protected:
 	Menu* m_rootMenu;
 	std::vector<Menu*> m_subMenus;
 	std::string m_menuTitle;
-	std::vector<std::vector<Button*>> m_buttonGrid;
-	location m_targetButtonLocation;
+	std::vector<std::vector<MenuButton*>> m_buttonGrid;
+	Location m_targetButtonLocation;
 
-	Button* GetButtonAt(location target);
+	MenuButton* GetButtonAt(Location target);
 	void EnsureInBounds();
 
 public:
-	static enum class Direction {
-		kUp,
-		kDown,
-		kLeft,
-		kRight,
-	};
 	
 	static constexpr int kRedColor = 4;
 	static constexpr int kStandarColor = 7;
 
 	Menu(const char* title, Menu* rootMenu);
 	void AddSubMenu(Menu* newSubMenu);
-	Menu* GetRootMenu();
 	Menu* GetSubMenu(int index);
 
 	void DisplayAllText() const ;
 
-	void AddButtonNewLine(Button* newButton) ;
-	void InsertButton(int xPos, int yPos , Button* newButton) ;
+	void AddButtonNewLine(MenuButton* newButton) ;
+	void InsertButton(int xPos, int yPos , MenuButton* newButton) ;
 	size_t GetMenuLength() const;
 	size_t GetLegthAtY(int yPos) const;
 
-	void SetCursorLocation(location newLocation);
+	void SetCursorLocation(Location newLocation);
 	void MoveCursor(Direction direction);
-	void PressSelectedButton(Menu* currentMenu);
+	Location* GetTargetLocation();
+	void PressSelectedButton(std::vector<Menu*>& menuStack);
 };
 

@@ -1,19 +1,19 @@
 #pragma once
 
 #include <vector>
+#include <iostream>
+#include <fstream>
 
-struct location
-{
-	int x;
-	int y;
-};
+#include "../Menu.h"
+#include "../LocationAndDirection.h"
 
 class levelInfo
 {
 	char** m_pCharMapArray;
 	int m_mapWidth;
 	int m_mapHeight;
-	
+	Location m_selectedChar = { -1,-1 };
+
 	static bool PrintRed(char printedChar);
 
 public:
@@ -21,20 +21,27 @@ public:
 	static constexpr char kEmptySpaceChar = '.';
 	static constexpr char kTrapChar = 'O';
 
+	void FillFromFile(const char* filePath);
+
 	levelInfo();
 	levelInfo(int width, int height);
 	levelInfo(levelInfo& copiedLevel);
 	~levelInfo();
 
-	//void initMap(char** map); this is bad, I cannot easily get the height/width from this
 	void InitMap(int width, int height);
-	char GetAt(location targetLocation);
-	void SetAt(location targetLocation, char newChar);
-	int GetMapWidth();
-	int GetMapHeight();
+	char GetAt(Location targetLocation) const;
+	void SetAt(Location targetLocation, char newChar);
+	int GetMapWidth() const;
+	int GetMapHeight() const;
 
-	void PrintSelect(location selectedLocation);
-	void PrintNoSelect();
+	Location GetSelectedLocation() const;
+	void MoveCursor(Direction dir);
+	void SetCursor(Location& newLoc);
+	void SetCursor(int x, int y);
 
-	void EnsureInBounds(location& targetlocation);
+	void Display() const;
+	void DisplayNoSelect() const;
+	void WriteToFile(std::ofstream& file) const;
+
+	void EnsureInBounds(Location& targetlocation);
 };
