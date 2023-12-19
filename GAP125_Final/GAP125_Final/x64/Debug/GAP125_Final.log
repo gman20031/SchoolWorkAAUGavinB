@@ -1,0 +1,4 @@
+﻿  Main.cpp
+D:\Users\GBRANDEN2\School Work\GitHub Clones\SchoolWorkAAUGavinB\GAP125_Final\GAP125_Final\Main.cpp(618,20): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\Users\GBRANDEN2\School Work\GitHub Clones\SchoolWorkAAUGavinB\GAP125_Final\GAP125_Final\Main.cpp(612): warning C4715: 'EnterName': not all control paths return a value
+  GAP125_Final.vcxproj -> D:\Users\GBRANDEN2\School Work\GitHub Clones\SchoolWorkAAUGavinB\GAP125_Final\x64\Debug\GAP125_Final.exe
