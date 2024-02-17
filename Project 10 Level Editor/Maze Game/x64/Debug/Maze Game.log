@@ -1,3 +1,0 @@
-﻿  main.cpp
-C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 9 Maze Game\Maze Game\main.cpp(201,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Maze Game.vcxproj -> C:\Users\gangs\Desktop\School Works\Homework\Game Programming\SchoolWorkAAUGitClone\Project 9 Maze Game\Maze Game\x64\Debug\Maze Game.exe
